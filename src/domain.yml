@@ -9,9 +9,26 @@ intents:
   - mood_unhappy
   - bot_challenge
   - order_pizza
+  - license_info
+
+entities:
+  - license_name
+
+slots:
+  license_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: license_name
+        intent: license_info
+
+actions:
+  - action_license_info
 
 responses:
   utter_greet:
+    - text: "Hello there! How can i assist you?"
     - text: "Hey! How are you?"
 
   utter_cheer_up:

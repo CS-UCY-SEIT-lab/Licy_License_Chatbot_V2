@@ -95,3 +95,9 @@ nlu:
       - Can i order a pizza please?
       - Pizza
       - I want to order a pizza
+
+  - intent: license_info
+    examples: |
+      - Can i have some information about [London](license_name)?
+      - Give me some info on [Paris](license_name)
+      - What do you know about [Rome](license_name)

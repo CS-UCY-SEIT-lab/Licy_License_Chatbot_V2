@@ -8,6 +8,11 @@ stories:
       - intent: mood_great
       - action: utter_happy
 
+  - story: give license information
+    steps:
+      - intent: license_info
+      - action: action_license_info
+
   - story: order pizza path
     steps:
       - intent: greet
