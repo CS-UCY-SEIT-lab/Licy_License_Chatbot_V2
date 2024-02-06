@@ -38,6 +38,7 @@ nlu:
       - of course
       - that sounds good
       - correct
+      - Right
 
   - intent: deny
     examples: |
@@ -96,8 +97,8 @@ nlu:
       - Pizza
       - I want to order a pizza
 
-  - intent: license_info
+  - intent: ask_for_license
     examples: |
-      - Can i have some information about [London](license_name)?
-      - Give me some info on [Paris](license_name)
-      - What do you know about [Rome](license_name)
+      - Can i have some information about "[Apache License 2.0](license_name)"?
+      - Give me some info on "[AGPL-3.0](license_name)"
+      - What do you know about "[Creative Commons Attribution Share Alike 4.0 International](license_name)"

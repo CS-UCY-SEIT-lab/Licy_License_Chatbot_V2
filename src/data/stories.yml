@@ -8,17 +8,19 @@ stories:
       - intent: mood_great
       - action: utter_happy
 
-  - story: give license information
+  - story: User agrees on license
     steps:
-      - intent: license_info
-      - action: action_license_info
+      - intent: ask_for_license
+      - action: action_get_license
+      - intent: affirm
+      - action: action_get_license_info
 
-  - story: order pizza path
+  - story: User disagrees on license
     steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: order_pizza
-      - action: utter_order_pizza
+      - intent: ask_for_license
+      - action: action_get_license
+      - intent: deny
+      - action: utter_ask_license
 
   - story: sad path 1
     steps:
