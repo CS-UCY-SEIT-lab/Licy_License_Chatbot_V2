@@ -1,5 +1,6 @@
 import os
 import json
+import random
 
 
 def list_files_in_directory(directory):
@@ -9,6 +10,14 @@ def list_files_in_directory(directory):
             files.append(filename)
 
     return files
+
+
+intent_text = [
+    "I want to know more about ",
+    "Give me some info on ",
+    "What do you know about ",
+    "Have you heard about ",
+]
 
 
 def read_licenses_info(folder_path):
@@ -24,20 +33,36 @@ def read_licenses_info(folder_path):
             data = json.load(file)
 
         titles.append(data["title"])
-        # ids.append(data["spdx-id"])
+        ids.append(data["spdx-id"])
         # descriptions.append(data["description"])
         # permissions.append(data["permissions"])
         # conditions.append(data["conditions"])
         # limitations.append(data["limitations"])
 
-    return titles
+    return titles, ids
 
 
-def writeLicenses():
-    licenses = read_licenses_info("../licensesJSON/")
+def writeLicensesNames():
+    licenses, ids = read_licenses_info("../licensesJSON/")
     with open("licenses.txt", "w") as file:
         for license in licenses:
-            file.write("- " + license + "\n")
+            file.write(
+                "- "
+                + random.choice(intent_text)
+                + '"['
+                + license
+                + '](license_name)" \n'
+            )
 
 
-writeLicenses()
+def writeLicensesIds():
+    licenses, ids = read_licenses_info("../licensesJSON/")
+    with open("licenses.txt", "w") as file:
+        for id in ids:
+            file.write(
+                "- " + random.choice(intent_text) + '"[' + id + '](license_name)" \n'
+            )
+
+
+# writeLicensesNames()
+writeLicensesIds()

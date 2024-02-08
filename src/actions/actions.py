@@ -1,9 +1,18 @@
 from typing import Any, Text, Dict, List
 import os
 import json
-from rasa_sdk import Action, Tracker
+from rasa_sdk import Action, Tracker, events
 from rasa_sdk.executor import CollectingDispatcher
 from difflib import SequenceMatcher
+
+titles = []
+ids = []
+descriptions = []
+permissions = []
+conditions = []
+limitations = []
+licenses_text = []
+confirmed_license = None
 
 
 def list_files_in_directory(directory):
@@ -16,12 +25,7 @@ def list_files_in_directory(directory):
 
 
 def read_licenses_info(folder_path):
-    titles = []
-    ids = []
-    descriptions = []
-    permissions = []
-    conditions = []
-    limitations = []
+
     filenames = list_files_in_directory(folder_path)
     for filename in filenames:
         with open(folder_path + filename, "r") as file:
@@ -33,8 +37,7 @@ def read_licenses_info(folder_path):
         permissions.append(data["permissions"])
         conditions.append(data["conditions"])
         limitations.append(data["limitations"])
-
-    return titles, ids, descriptions, permissions, conditions, limitations
+        licenses_text.append(data["license-text"])
 
 
 def check_similarity(input, license_names, license_ids):
@@ -77,21 +80,19 @@ class GetLicenseInfo(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        titles, ids, descriptions, permissions, conditions, limitations = (
-            read_licenses_info("./licensesJSON/")
-        )
+
+        read_licenses_info("./licensesJSON/")
         license_parameter = tracker.get_slot("license_name")
-        print(license_parameter)
         license_name, license_id, max_similarity = check_similarity(
             license_parameter, titles, ids
         )
-
+        print("License name:", license_name)
         # Do something with the parameters
         dispatcher.utter_message(
             text=f"Do you mean the following software license: {license_name} ({license_id}) ."
         )
-
-        return []
+        tracker.slots["confirmed_license_name"] = license_name
+        return [events.SlotSet("confirmed_license_name", license_name)]
 
 
 class LicenseInfoProvider(Action):
@@ -105,8 +106,15 @@ class LicenseInfoProvider(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        license_name = tracker.get_slot("license_name")
+        # license_name = tracker.get_slot("license_name")
         # Do something with the parameters
-        dispatcher.utter_message(text=f"User agreed on license: {license_name}  .")
+        print("Confirmed License: ", tracker.get_slot("confirmed_license_name"))
+        index = titles.index(tracker.get_slot("confirmed_license_name"))
+        license_text = ""
+        for line in licenses_text[index]:
+            license_text += line + "\n"
+        dispatcher.utter_message(
+            text=f"Here is the License full text: \n {license_text}"
+        )
 
         return []
