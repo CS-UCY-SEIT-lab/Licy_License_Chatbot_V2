@@ -15,6 +15,16 @@ stories:
       - intent: affirm
       - action: action_get_license_info
 
+  - story: User asks for license permissions
+    steps:
+      - intent: ask_for_license_permission
+      - action: action_check_permission
+
+  - story: User asks for license suggestions
+    steps:
+      - intent: ask_for_license_suggestions
+      - action: action_suggest_license
+
   - story: User disagrees on license
     steps:
       - intent: ask_for_license

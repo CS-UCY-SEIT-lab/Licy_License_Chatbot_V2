@@ -34,10 +34,10 @@ def read_licenses_info(folder_path):
 
         titles.append(data["title"])
         ids.append(data["spdx-id"])
-        # descriptions.append(data["description"])
-        # permissions.append(data["permissions"])
-        # conditions.append(data["conditions"])
-        # limitations.append(data["limitations"])
+        descriptions.append(data["description"])
+        permissions.append(data["permissions"])
+        conditions.append(data["conditions"])
+        limitations.append(data["limitations"])
 
     return titles, ids
 

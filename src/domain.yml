@@ -10,9 +10,15 @@ intents:
   - bot_challenge
   - order_pizza
   - ask_for_license
+  - ask_for_license_permission
+  - ask_for_license_suggestions
 
 entities:
   - license_name
+  - permission
+  - choice
+  - allowed_permissions
+  - disallowed_permissions
 
 slots:
   license_name:
@@ -22,6 +28,33 @@ slots:
       - type: from_entity
         entity: license_name
         intent: ask_for_license
+      - type: from_entity
+        entity: license_name
+        intent: ask_for_license_permission
+
+  permission:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: permission
+        intent: ask_for_license_permission
+
+  allowed_permissions:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: allowed_permissions
+        intent: ask_for_license_suggestions
+
+  choice:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: choice
+        intent: ask_for_license_permission
 
   confirmed_license_name:
     type: text
@@ -30,6 +63,8 @@ slots:
 actions:
   - action_get_license_info
   - action_get_license
+  - action_check_permission
+  - action_suggest_license
 
 responses:
   utter_greet:

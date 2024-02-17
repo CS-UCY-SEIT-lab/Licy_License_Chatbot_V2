@@ -209,3 +209,42 @@ nlu:
       - Have you heard about "[CPL-1.0](license_name)" 
       - Give me some info on "[PostgreSQL](license_name)" 
       - What do you know about "[CC-BY-NC](license_name)"
+
+  - intent: ask_for_license_permission
+    examples: |
+      - Does "[CPL-1.0](license_name)" "[allow](choice)" "[private-use](permission)" ?
+      - Does "[CC-BY-NC](license_name)" "[forbid](choice)" "[sublicense](permission)" ?
+      - Does "[GPL-2.0](license_name)" "[permit](choice)" "[modifications](permission)" to the source code ?
+      - "[EUPL-1.2](license_name)" "[deny](choice)" "[commercial-use](permission)" ?
+      - "[Can](choice)" i "[modify](permission)" the source code of "[CC-BY-NC](license_name)"
+      - "[Can](choice)" i use "[commercially](permission)" the software with the [Eclipse Public License 1.0](license_name) ?
+      - Does "[APSL-2.0](license_name)" "[let](choice)" the licensed material and derivatives to be used for "[commercial purposes](permission)"?
+      - Is "[sublicensing](permission)" "[allowed](choice)" for the "[MIT](license_name)" ?
+      - "[Can](choice)" i " "[sell](permission)" a product I created using the "[MIT](license_name)" license ?
+      - "Am I "[allowed](choice)" to "[profit](permission)" from software with the "[Apache License 2.0](license_name)"
+      - Does the "[Mozilla Public License 2.0](license_name)" "[let](choice)" me to "[alter](permission)" the code?
+      - Am I "[permitted](license_name)" to "[make changes](permission)" to a program under the "[GNU General Public License v3](license_name)"?
+      - "[Can](choice)" i "[share](permission)" the "[LGPL-3.0](license_name)" software with others?
+      - Is "[redistributing](permission)" "[allowed](permission)" for the license "[Creative Commons Attribution Share Alike](license_name)"?
+      - Am I "[forbidden](choice)" to "[give away copies](permission)" of software with the "[GNU Affero General Public License v3.0](license_name)" ?
+      - "[Can](choice)" i use the "[EPL-1.0](license_name)" software for "[personal projects](permission)" ? 
+      - Am I "[permitted](choice)" to use for "[my own purposes](permission)" software with the "[BSD-2-Clause](license_name)" ?
+      - "[Can](choice)" I create a "[sub-license](permission)" for software with the "[GNU General Public License](license_name)" ?
+      - Does the "[Creative Commons Attribution-ShareAlike](license_name)" "[allow](choice)" "[granting further licenses](permission)" ?
+      - Does the "[GPL-3.0](license_name)" "[allow](choice)" using the software in "[patented](permission)" products ?
+      - Is "[patent infringement](permission)" a "[concern](choice)" with the "[Apache License 2.0](license_name)" ?
+      - Does the "[Creative Commons Attribution](license_name)" "[cover](choice)" "[patent claims](permission)" ?
+      - Do i "[grant](choice)" the "[patent claims](permission)" with "[Creative Commons Attribution](license_name)"  ?
+      - Do I "[need](choice)" to display the "[copyright notice](permission)" when using "[BSD-2-Clause](license_name)" software?
+      - Does the "[GNU General Public License](license_name)" "[require](choice)" including "[original copyright](permission)" ?
+      - Do i "[need](choice)" to "[state changes](permission)" on the source code of my software with "[ECL-2.0](license_name)" ?
+      - Am i "[forced](choice)" to "[write modifications](permission)" made on my software with "[ECL-2.0](license_name)" ?
+      - Am i "[forced](choice)" to "[document modifications](permission)" made on my software with "[ECL-2.0](license_name)" ?
+      - Do users have the "[right](choice)" to access source code through the "[network](permission)" with "[OFL-1.1](license_name)"?
+      - Does "[CUA-OPL-1.0](license_name)" "[allow](choice)" users ,who interact with the licensed material via a "[network](permission)", to receive a copy of the source code?
+
+  - intent: ask_for_license_suggestions
+    examples: |
+      - Can you suggest me some licenses that "[permit modifications,commercial-use,private-use](allowed_permissions)" ?
+      - Can you suggest me some licenses where "[modifications,commercial-use,private-use are permitted](allowed_permissions)" ?
+      - Tell me some licenses where "[disclosing-source,document-modifications are required](allowed_permissions)" ?
