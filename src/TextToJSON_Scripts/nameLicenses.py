@@ -18,6 +18,52 @@ intent_text = [
     "What do you know about ",
     "Have you heard about ",
 ]
+negative_positive = [
+    "do ",
+    "does ",
+    "isn't ",
+    "aren't ",
+    "doesn't ",
+    "",
+    "",
+    "don't ",
+    "dont ",
+    "doesnt ",
+    "",
+    "do not ",
+    "does not ",
+    "",
+    "",
+]
+key_permissions = {
+    (
+        "permit",
+        "allow",
+        "accept",
+        "forbid",
+    ): [
+        "commercial-use",
+        "modifications",
+        "distribution",
+        "private-use",
+        "sublicensing",
+        "patent-use",
+        "trademark-use",
+    ],
+    ("require", "demand", "require", "demand"): [
+        "include-copyright",
+        "disclose-source",
+        "document-changes",
+        "network-use-diclose",
+        "same-license",
+    ],
+    ("offer", "give", "offer", "give"): ["liability", "warranty"],
+}
+intent_suggest_text = [
+    "Tell me some licenses that",
+    "Suggest me some licenses that",
+    "Can you suggest me some licenses which",
+]
 
 
 def read_licenses_info(folder_path):
@@ -40,6 +86,59 @@ def read_licenses_info(folder_path):
         limitations.append(data["limitations"])
 
     return titles, ids
+
+
+def writeSuggestionInstances():
+    with open("suggestions.txt", "w") as file:
+        for i in range(10):
+            sentence = ""
+            sentence += random.choice(intent_suggest_text)
+            cnt = 0
+            word = None
+            for key, value in key_permissions.items():
+                if cnt == 0:
+                    word = "allowed"
+                elif cnt == 1:
+                    word = "restricted"
+                elif cnt == 2:
+                    word = "offered"
+                random_key = random.choice(key)
+                random_permission_selections = random.randint(1, len(value))
+                random_permissions = random.sample(value, random_permission_selections)
+                sentence += f'"[{random_key}]({word}_word)" "['
+                for permission in random_permissions:
+                    sentence += f"{permission} ,"
+                sentence = sentence[:-2]
+                sentence += f'] ({word}_permissions)" '
+                cnt += 1
+            file.write("- " + sentence + "\n")
+
+
+def writeSuggestionInstances2():
+    with open("suggestions.txt", "w") as file:
+        for i in range(200):
+            sentence = ""
+            sentence += random.choice(intent_suggest_text)
+            cnt = 0
+            word = None
+            for key, value in key_permissions.items():
+                if cnt == 0:
+                    word = "allowed"
+                elif cnt == 1:
+                    word = "restricted"
+                elif cnt == 2:
+                    word = "offered"
+                random_key = random.choice(key)
+                random_permission_selections = random.randint(1, len(value))
+                random_permissions = random.sample(value, random_permission_selections)
+                sentence += (
+                    f' "[{random.choice(negative_positive)+random_key}]({word}_word)" '
+                )
+                for permission in random_permissions:
+                    sentence += f'"[{permission}]({word}_permissions)",'
+                sentence = sentence[:-1]
+                cnt += 1
+            file.write("- " + sentence + "\n")
 
 
 def writeLicensesNames():
@@ -65,4 +164,5 @@ def writeLicensesIds():
 
 
 # writeLicensesNames()
-writeLicensesIds()
+# writeLicensesIds()
+writeSuggestionInstances2()

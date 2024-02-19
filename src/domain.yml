@@ -18,7 +18,11 @@ entities:
   - permission
   - choice
   - allowed_permissions
-  - disallowed_permissions
+  - restricted_permissions
+  - offered_permissions
+  - allowed_word
+  - restricted_word
+  - offered_word
 
 slots:
   license_name:
@@ -40,12 +44,52 @@ slots:
         entity: permission
         intent: ask_for_license_permission
 
+  allowed_word:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: allowed_word
+        intent: ask_for_license_suggestions
+
+  restricted_word:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: restricted_word
+        intent: ask_for_license_suggestions
+
+  offered_word:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: offered_word
+        intent: ask_for_license_suggestions
+
   allowed_permissions:
-    type: text
+    type: list
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: allowed_permissions
+        intent: ask_for_license_suggestions
+
+  restricted_permissions:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: restricted_permissions
+        intent: ask_for_license_suggestions
+
+  offered_permissions:
+    type: list
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: offered_permissions
         intent: ask_for_license_suggestions
 
   choice:

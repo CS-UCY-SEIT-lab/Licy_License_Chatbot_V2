@@ -3,6 +3,7 @@ import os
 import json
 from rasa_sdk import Action, Tracker, events
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import AllSlotsReset
 from difflib import SequenceMatcher
 
 titles = []
@@ -14,6 +15,41 @@ limitations = []
 all_permissions = []
 licenses_text = []
 confirmed_license = None
+choice_synonyms = {
+    "allow": ["allow", "permit", "accept", "let", "grant", "authorize"],
+    "deny": [
+        "deny",
+        "disallow",
+        "ban",
+        "block",
+        "forbid",
+        "prohibid",
+    ],
+    "require": ["require", "need", "demand", "insist"],
+    "negative": [
+        "do not",
+        "don't",
+        "does not",
+        "doesn't",
+        "is not",
+        "isn't",
+        "are not",
+        "aren't",
+        "dont",
+        "doesnt",
+        "not",
+    ],
+    "positive": ["do", "does", "is", "are"],
+    "offer": ["offer", "give", "provide", "supply", "afford"],
+}
+word_values = {
+    "allow": 1,
+    "deny": 0,
+    "negative": 0,
+    "positive": 1,
+    "offer": 1,
+    "require": 1,
+}
 permission_synonyms = {
     "private-use": ["private use", "personally", "in private", "privately"],
     "commercial-use": [
@@ -59,7 +95,100 @@ permission_synonyms = {
         "disclosing network usage",
         "share modifications on a network",
     ],
+    "warranty": ["warranty"],
 }
+
+
+def exist_similar(word, list, max_init):
+    max_similarity_percentage = max_init
+    for synonym in list:
+        similarity = SequenceMatcher(None, word, synonym).ratio()
+        if similarity > max_similarity_percentage:
+            return 1
+
+    return 0
+
+
+def find_similar(input, dictionary):
+    max_similarity_percentage = 0.0
+    max_similarity_name = None
+
+    for key, values in dictionary.items():
+        for synonym in values:
+            similarity = SequenceMatcher(None, input, synonym).ratio()
+
+            if similarity > max_similarity_percentage:
+                max_similarity_percentage = similarity
+                max_similarity_name = key
+
+    return max_similarity_name, max_similarity_percentage
+
+
+def search_permissions(word, permissions, license_ids):
+    value = None
+    phrase = ""
+
+    if len(word) > 1:
+        word[0] += " " + word[len(word) - 1]
+
+    subwords = word[0].split(" ")
+    if len(subwords) > 2:
+        if "not" or "nt" or "n't" in subwords:
+            value = word_values["negative"]
+        else:
+            value = word_values["positive"]
+
+        choice, percentage = find_similar(subwords[len(subwords) - 1], choice_synonyms)
+        value = int(not (value ^ word_values[choice]))
+    elif len(subwords) == 2:
+        sign, percentage = find_similar(subwords[0], choice_synonyms)
+
+        if percentage > 0.85:
+            value = word_values[sign]
+
+        choice, percentage = find_similar(subwords[1], choice_synonyms)
+        value = int(not (value ^ word_values[choice]))
+    else:
+        value = 1
+        choice, percentage = find_similar(subwords[0], choice_synonyms)
+        value = int(not (value ^ word_values[choice]))
+
+    if value == 1:
+        print("Positive")
+    else:
+        print("Negative")
+
+    if choice is "offer":
+        value = ~value
+
+    for permission in permissions:
+        permission_list = permission.split(",")
+        permissions.remove(permission)
+        for permission_seperated in permission_list:
+            permissions.append(permission_seperated)
+
+    permissions = list(set(permissions))
+
+    new_permissions = [
+        check_permission_similarity(permission)[0] for permission in permissions
+    ]
+    suggested_licenses = [id for id in license_ids]
+    print("New permissions: ", new_permissions)
+    for permission in new_permissions:
+        valid_licenses = []
+        for i in range(len(suggested_licenses)):
+            if value == 0:
+                if permission not in all_permissions[ids.index(suggested_licenses[i])]:
+                    valid_licenses.append(suggested_licenses[i])
+            else:
+                if permission in all_permissions[ids.index(suggested_licenses[i])]:
+                    valid_licenses.append(suggested_licenses[i])
+
+        new_suggested_licenses = [
+            license for license in valid_licenses if license in suggested_licenses
+        ]
+
+    return new_suggested_licenses
 
 
 def check_permission_similarity(input):
@@ -91,6 +220,14 @@ def list_files_in_directory(directory):
 
 
 def read_licenses_info(folder_path):
+    titles.clear()
+    ids.clear()
+    descriptions.clear()
+    permissions.clear()
+    conditions.clear()
+    limitations.clear()
+    all_permissions.clear()
+    licenses_text.clear()
 
     filenames = list_files_in_directory(folder_path)
     for filename in filenames:
@@ -237,7 +374,9 @@ class LicensePermissionInfo(Action):
             permission = check_collision(choice)
             print("After collision check pemission: ", permission)
         else:
-            permission = check_permission_similarity(permission)
+            permission, permission_similarity_percentage = check_permission_similarity(
+                permission
+            )
 
         if check_license_permisssion(license_id, permission):
             dispatcher.utter_message(
@@ -263,6 +402,27 @@ class LicenseSuggestion(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         allowed_permissions = tracker.get_slot("allowed_permissions")
-        dispatcher.utter_message(text=f"License names: {allowed_permissions}")
+        restricted_permissions = tracker.get_slot("restricted_permissions")
+        offered_permissions = tracker.get_slot("offered_permissions")
+        allowed_word = tracker.get_slot("allowed_word")
+        restricted_word = tracker.get_slot("restricted_word")
+        offered_word = tracker.get_slot("offered_word")
+        read_licenses_info("./licensesJSON/")
+        message = f"Allowed permissions: {allowed_permissions} , restricted permissions: {restricted_permissions} , offered permissions: {offered_permissions} , allowed word: {allowed_word} , restricted word: {restricted_word} , offered word: {offered_word}"
+        dispatcher.utter_message(text=message)
+        print(f"Allowed permissions: {allowed_permissions} ")
+        suggested_licenses = search_permissions(allowed_word, allowed_permissions, ids)
+        print(suggested_licenses)
+        suggested_licenses = search_permissions(
+            restricted_word, restricted_permissions, suggested_licenses
+        )
+        print(suggested_licenses)
+        suggested_licenses = search_permissions(
+            offered_word, offered_permissions, suggested_licenses
+        )
+        print(suggested_licenses)
 
-        return []
+        # for permission in allowed_permissions:
+        #     print(permission)
+
+        return [AllSlotsReset()]
