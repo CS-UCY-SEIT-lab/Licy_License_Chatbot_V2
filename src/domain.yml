@@ -1,19 +1,21 @@
 version: "3.1"
-
 intents:
-  - greet
-  - goodbye
   - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - order_pizza
+  # - answer_question
   - ask_for_license
   - ask_for_license_permission
   - ask_for_license_suggestions
-
+  - ask_for_license_tutorial
+  - bot_challenge
+  - deny
+  - goodbye
+  - greet
+  - mood_great
+  - mood_unhappy
+  - neutral
+  - order_pizza
 entities:
+  - answer
   - license_name
   - permission
   - choice
@@ -23,6 +25,7 @@ entities:
   - allowed_word
   - restricted_word
   - offered_word
+  - stop_word
 
 slots:
   license_name:
@@ -83,7 +86,6 @@ slots:
       - type: from_entity
         entity: restricted_permissions
         intent: ask_for_license_suggestions
-
   offered_permissions:
     type: list
     influence_conversation: false
@@ -91,7 +93,6 @@ slots:
       - type: from_entity
         entity: offered_permissions
         intent: ask_for_license_suggestions
-
   choice:
     type: text
     influence_conversation: false
@@ -99,44 +100,46 @@ slots:
       - type: from_entity
         entity: choice
         intent: ask_for_license_permission
-
   confirmed_license_name:
     type: text
     mappings: []
-
+  # answer:
+  #   type: text
+  #   influence_conversation: false
+  #   mappings:
+  #     - type: from_entity
+  #       entity: answer
+  #       intent: answer_question
 actions:
+  - utter_start_tutorial
+  - action_ask_question
   - action_get_license_info
   - action_get_license
   - action_check_permission
   - action_suggest_license
-
+  - action_finish_tutorial
 responses:
   utter_greet:
-    - text: "Hello there! How can i assist you?"
-    - text: "Hey! How are you?"
-
+    - text: Hello there! How can i assist you?
+    - text: Hey! How are you?
   utter_cheer_up:
     - text: "Here is something to cheer you up:"
-      image: "https://i.imgur.com/nGF1K8f.jpg"
-
+      image: https://i.imgur.com/nGF1K8f.jpg
   utter_did_that_help:
-    - text: "Did that help you?"
-
+    - text: Did that help you?
   utter_happy:
-    - text: "Great, carry on!"
-
+    - text: Great, carry on!
   utter_goodbye:
-    - text: "Bye"
-
+    - text: Bye
+  utter_start_tutorial:
+    - text: Let me guide you find the appropriate license through a series of questions.
+    - text: Let me help you find the license that will suit best on your needs.
   utter_iamabot:
-    - text: "I am a bot, powered by Rasa."
-
+    - text: I am a bot, powered by Rasa.
   utter_order_pizza:
-    - text: "Can i have your order please?"
-
+    - text: Can i have your order please?
   utter_ask_license:
     - text: "I might not know this license or you misspronounce it. Can you provide me again the license so i can check? "
-
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

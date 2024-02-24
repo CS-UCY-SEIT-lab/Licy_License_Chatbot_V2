@@ -1,13 +1,4 @@
-# from difflib import SequenceMatcher
+string = "hello world"
 
-# print(SequenceMatcher(None, "aren t", "arent").ratio())
-# message = "modifications,document-changes"
-# message2 = "sssssssss"
-
-# print(message.split(","))
-# print(message2.split(","))
-my_list = ["apple", "banana", "cherry", "apple", "mango", "orange", "cherry"]
-unique_list = list(set(my_list))
-
-print(f"Original list: {my_list}")
-print(f"List with duplicates removed: {unique_list}")
+if "hello" in string:
+    print("Yes")

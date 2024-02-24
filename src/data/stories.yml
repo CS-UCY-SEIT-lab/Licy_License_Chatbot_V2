@@ -25,6 +25,12 @@ stories:
       - intent: ask_for_license_suggestions
       - action: action_suggest_license
 
+  - story: User asks for tutorial
+    steps:
+      - intent: ask_for_license_tutorial
+      - action: utter_start_tutorial
+      - action: action_ask_question
+
   - story: User disagrees on license
     steps:
       - intent: ask_for_license
@@ -51,3 +57,38 @@ stories:
       - action: utter_did_that_help
       - intent: deny
       - action: utter_goodbye
+
+  - story: License tutorial path
+    steps:
+      - intent: ask_for_license_tutorial
+      - action: utter_start_tutorial
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral
+      - action: action_ask_question
+      - or:
+          - intent: affirm
+          - intent: deny
+          - intent: neutral

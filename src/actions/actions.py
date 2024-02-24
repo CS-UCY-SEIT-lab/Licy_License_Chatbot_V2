@@ -4,6 +4,7 @@ import json
 from rasa_sdk import Action, Tracker, events
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import AllSlotsReset
+from rasa_sdk.events import FollowupAction
 from difflib import SequenceMatcher
 
 titles = []
@@ -95,7 +96,9 @@ permission_synonyms = {
         "disclosing network usage",
         "share modifications on a network",
     ],
+    "same-license": ["same-license", "identical-license", "includes-license"],
     "warranty": ["warranty"],
+    "liability": ["liability"],
 }
 
 
@@ -153,11 +156,6 @@ def search_permissions(word, permissions, license_ids):
         choice, percentage = find_similar(subwords[0], choice_synonyms)
         value = int(not (value ^ word_values[choice]))
 
-    if value == 1:
-        print("Positive")
-    else:
-        print("Negative")
-
     if choice is "offer":
         value = ~value
 
@@ -169,12 +167,18 @@ def search_permissions(word, permissions, license_ids):
 
     permissions = list(set(permissions))
 
-    new_permissions = [
+    correct_permissions = [
         check_permission_similarity(permission)[0] for permission in permissions
     ]
+    if value == 1:
+        print("Positive")
+        phrase += f" {choice} "
+    else:
+        print("Negative")
+        phrase += f" don't {choice}"
     suggested_licenses = [id for id in license_ids]
-    print("New permissions: ", new_permissions)
-    for permission in new_permissions:
+    for permission in correct_permissions:
+        phrase += f" {permission} ,"
         valid_licenses = []
         for i in range(len(suggested_licenses)):
             if value == 0:
@@ -184,11 +188,11 @@ def search_permissions(word, permissions, license_ids):
                 if permission in all_permissions[ids.index(suggested_licenses[i])]:
                     valid_licenses.append(suggested_licenses[i])
 
-        new_suggested_licenses = [
+        suggested_licenses = [
             license for license in valid_licenses if license in suggested_licenses
         ]
 
-    return new_suggested_licenses
+    return suggested_licenses, phrase[:-1]
 
 
 def check_permission_similarity(input):
@@ -409,20 +413,67 @@ class LicenseSuggestion(Action):
         offered_word = tracker.get_slot("offered_word")
         read_licenses_info("./licensesJSON/")
         message = f"Allowed permissions: {allowed_permissions} , restricted permissions: {restricted_permissions} , offered permissions: {offered_permissions} , allowed word: {allowed_word} , restricted word: {restricted_word} , offered word: {offered_word}"
-        dispatcher.utter_message(text=message)
-        print(f"Allowed permissions: {allowed_permissions} ")
-        suggested_licenses = search_permissions(allowed_word, allowed_permissions, ids)
-        print(suggested_licenses)
-        suggested_licenses = search_permissions(
-            restricted_word, restricted_permissions, suggested_licenses
-        )
-        print(suggested_licenses)
-        suggested_licenses = search_permissions(
-            offered_word, offered_permissions, suggested_licenses
-        )
-        print(suggested_licenses)
+        print(message)
 
+        license_ids, allowed_phrase = search_permissions(
+            allowed_word, allowed_permissions, ids
+        )
+        # print(license_ids)
+        license_ids, restricted_phrase = search_permissions(
+            restricted_word, restricted_permissions, license_ids
+        )
+        # print(license_ids)
+        license_ids, offered_phrase = search_permissions(
+            offered_word, offered_permissions, license_ids
+        )
+        # print(license_ids)
+
+        output_message = f"Here are some licenses that{allowed_phrase } and{restricted_phrase} and{offered_phrase} : \n"
+        licenses_full_name = []
+        for license_id in license_ids:
+            index = ids.index(license_id)
+            licenses_full_name.append(titles[index])
+
+        for i in range(len(license_ids)):
+            output_message += f" {licenses_full_name[i]} ({license_ids[i]}) ,"
+        output_message = output_message[:-1]
+        dispatcher.utter_message(text=output_message)
         # for permission in allowed_permissions:
         #     print(permission)
 
         return [AllSlotsReset()]
+
+
+class FinishQuestion(Action):
+    def name(self) -> Text:
+        return "action_finish_tutorial"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message(text="Finished")
+
+        return []
+
+
+class AskQuestion(Action):
+    def name(self) -> Text:
+        return "action_ask_question"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        answer = tracker.latest_message["text"]
+        dispatcher.utter_message(text="Question")
+        if "Stop" in answer or "stop" in answer:
+            dispatcher.utter_message(text="Finished")
+
+        return []
