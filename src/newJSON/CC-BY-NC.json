@@ -1,0 +1,21 @@
+{
+  "title": "Creative Commons Attribution NonCommercial",
+  "spdx-id": "CC-BY-NC",
+  "description": "This variant of the attribution creative commons license does not allow for commercial use of the original work. Doesn\u2019t allow for Tivoization and provides protection from defamation for the creato",
+  "permissions": [
+    "modifications",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

@@ -7,8 +7,56 @@ from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.events import FollowupAction
 from difflib import SequenceMatcher
 
+
+class License:
+    def __init__(self):
+        self.title = None
+        self.id = None
+        self.description = None
+        self.permissions = {
+            "commercial-use": 0,
+            "distribution": 0,
+            "modifications": 0,
+            "private-use": 0,
+            "patent-use": 0,
+            "sublicense": 0,
+        }
+        self.conditions = {
+            "include-copyright": 0,
+            "document-changes": 0,
+            "disclose-source": 0,
+            "network-use-disclose": 0,
+            "same-license": 0,
+        }
+        self.limitations = {"liability": 0, "warranty": 0, "trademark-use": 0}
+
+    def set_info(self, conditions, limitations, permissions, title, description, id):
+        for cond in conditions:
+            self.conditions[cond] = 1
+        for perm in permissions:
+            self.permissions[perm] = 1
+        for lim in limitations:
+            self.limitations[lim] = 1
+        self.all_rights = self.conditions.copy()
+        self.all_rights.update(self.permissions)
+        self.all_rights.update(self.limitations)
+
+        self.id = id
+        self.title = title
+        self.description = description
+
+    def print_info(self):
+        print(self.permissions)
+        print(self.limitations)
+        print(self.conditions)
+        print(self.id)
+        print(self.title)
+        print(self.description)
+
+
 titles = []
 ids = []
+licenses = []
 descriptions = []
 permissions = []
 conditions = []
@@ -232,6 +280,7 @@ def read_licenses_info(folder_path):
     limitations.clear()
     all_permissions.clear()
     licenses_text.clear()
+    licenses.clear()
 
     filenames = list_files_in_directory(folder_path)
     for filename in filenames:
@@ -248,6 +297,32 @@ def read_licenses_info(folder_path):
         all_permissions.append(
             data["permissions"] + data["conditions"] + data["limitations"]
         )
+        license = License()
+        license.set_info(
+            data["conditions"],
+            data["limitations"],
+            data["permissions"],
+            data["title"],
+            data["description"],
+            data["spdx-id"],
+        )
+        licenses.append(license)
+
+
+# SASTOOOOOOO
+def getLicenseInfo(license_ids):
+    license_permissions = []
+    license_titles = []
+    print(license_ids)
+    for id in license_ids:
+        for license in licenses:
+            if id == license.id:
+                license_permissions.append(
+                    [license.permissions, license.conditions, license.limitations]
+                )
+                license_titles.append(license.title)
+
+    return license_permissions, license_titles
 
 
 def check_collision(choice):
@@ -319,7 +394,7 @@ class GetLicenseInfo(Action):
         print("License name:", license_name)
         # Do something with the parameters
         dispatcher.utter_message(
-            text=f"Do you mean the following software license: {license_name} ({license_id}) ."
+            text=f"Do you mean the following software license: {license_name} ({license_id}) .",
         )
         tracker.slots["confirmed_license_name"] = license_name
         return [events.SlotSet("confirmed_license_name", license_name)]
@@ -437,9 +512,16 @@ class LicenseSuggestion(Action):
         for i in range(len(license_ids)):
             output_message += f" {licenses_full_name[i]} ({license_ids[i]}) ,"
         output_message = output_message[:-1]
-        dispatcher.utter_message(text=output_message)
-        # for permission in allowed_permissions:
-        #     print(permission)
+
+        license_permissions, license_titles = getLicenseInfo(license_ids)
+
+        json_mess = {
+            "key": "permission_suggested_licenses",
+            "license_ids": license_ids,
+            "license_titles": licenses_full_name,
+            "license_permissions": license_permissions,
+        }
+        dispatcher.utter_message(text=output_message, json_message=json_mess)
 
         return [AllSlotsReset()]
 

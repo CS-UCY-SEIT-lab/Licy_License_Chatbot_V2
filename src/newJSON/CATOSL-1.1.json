@@ -1,0 +1,24 @@
+{
+  "title": "Computer Associates Trusted Open Source License 1.1",
+  "spdx-id": "CATOSL-1.1",
+  "description": "A permissive license that has a fair amount of restrictions, including a relatively uncommon clause requiring you to email Computer Associates International if any IP conflicts arise.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

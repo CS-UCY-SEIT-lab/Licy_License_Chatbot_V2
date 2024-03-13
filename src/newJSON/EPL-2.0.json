@@ -1,0 +1,22 @@
+{
+  "title": "Eclipse Public License 2.0",
+  "spdx-id": "EPL-2.0",
+  "description": "This commercially-friendly copyleft license provides the ability to commercially license binaries; a modern royalty-free patent license grant; and the ability for linked works to use other licenses, including commercial ones.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "modifications",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "disclose-source",
+    "include-copyright",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Creative Commons Attribution NoDerivs",
+  "spdx-id": "CC-ND",
+  "description": "The no derivatives creative commons license is straightforward; you can take a work released under this license and re-distribute it but you can\u2019t change it. You must give credit to the original author of the work, state their name and the title of the original work, and include the attribution logo, found on their website here. Doesn\u2019t allow for Tivoization and provides protection from defamation for the creator.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

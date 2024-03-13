@@ -1,0 +1,7 @@
+{
+    "questions_file": "../Chatbot Questions/questions_json.json",
+    "licenses_folder": "../newJSON/",
+    "dependencies_file": "../Chatbot Questions/encoded_dependencies.txt",
+    "templates_folder": "../UI/templates",
+    "static_folder": "../UI/static"
+}

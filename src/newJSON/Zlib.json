@@ -1,0 +1,21 @@
+{
+  "title": "zlib License",
+  "spdx-id": "Zlib",
+  "description": "A short permissive license, compatible with GPL. Requires altered source versions to be documented as such.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

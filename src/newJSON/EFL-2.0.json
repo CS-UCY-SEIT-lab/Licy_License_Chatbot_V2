@@ -1,0 +1,22 @@
+{
+  "title": "Eiffel Forum License v2.0",
+  "spdx-id": "EFL-2.0",
+  "description": "A short, sweet, and permissive license that provides a minimal amount of protection for the author.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

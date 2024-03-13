@@ -1,0 +1,23 @@
+{
+  "title": "Erlang Public License v1.1",
+  "spdx-id": "ErlPL-1.1",
+  "description": "A slightly modified version of the Mozilla Public License 1.0, specified for Swedish laws. As per usual with these types of licenses, you have to include a notice, specified in Exhibit A, in each source file.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "trademark-use"
+  ]
+}

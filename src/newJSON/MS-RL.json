@@ -1,0 +1,22 @@
+{
+  "title": "Microsoft Reciprocal License",
+  "spdx-id": "MS-RL",
+  "description": "An open source license with a patent grant similar to the <a href=\"/licenses/ms-pl/\">Microsoft Public License</a>, with the additional condition that any source code for any derived file be provided under this license.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "disclose-source",
+    "include-copyright",
+    "same-license"
+  ],
+  "limitations": [
+    "warranty",
+    "trademark-use"
+  ]
+}

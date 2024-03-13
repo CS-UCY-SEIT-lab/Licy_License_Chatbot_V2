@@ -1,0 +1,22 @@
+{
+  "title": "Open Data Commons Open Database License v1.0",
+  "spdx-id": "ODbL-1.0",
+  "description": "The Open Database License (ODbL) is a license agreement intended to allow users to freely share, modify, and use a database while maintaining this same freedom for others.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "modifications",
+    "private-use",
+    "patent-use"
+  ],
+  "conditions": [
+    "disclose-source",
+    "include-copyright",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "trademark-use",
+    "warranty"
+  ]
+}

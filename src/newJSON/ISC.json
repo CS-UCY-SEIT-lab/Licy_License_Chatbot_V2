@@ -1,0 +1,20 @@
+{
+  "title": "ISC License",
+  "spdx-id": "ISC",
+  "description": "A permissive license lets people do anything with your code with proper attribution and without warranty. The ISC license is functionally equivalent to the <a href=\"/licenses/bsd-2-clause/\">BSD 2-Clause</a> and <a href=\"/licenses/mit/\">MIT</a> licenses, removing some language that is no longer necessary.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "modifications",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

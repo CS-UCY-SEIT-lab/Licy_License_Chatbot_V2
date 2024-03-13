@@ -1,0 +1,22 @@
+{
+  "title": "Cube License",
+  "spdx-id": "CL",
+  "description": "This license is based on zlib, but adds an additional clause which is intended to prevent sublicensing. While this clause does not make this license non-free, it does make it GPL-incompatible.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

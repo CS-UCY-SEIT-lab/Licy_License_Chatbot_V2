@@ -1,0 +1,20 @@
+{
+  "title": "Creative Commons Attribution 4.0 International",
+  "spdx-id": "CC-BY-4.0",
+  "description": "Permits almost any use subject to providing credit and license notice. Frequently used for media assets and educational materials. The most common license for Open Access scientific publications. Not recommended for software.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes"
+  ],
+  "limitations": [
+    "liability",
+    "trademark-use",
+    "warranty"
+  ]
+}

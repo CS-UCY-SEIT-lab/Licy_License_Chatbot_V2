@@ -1,0 +1,20 @@
+{
+  "title": "PostgreSQL License",
+  "spdx-id": "PostgreSQL",
+  "description": "A very short, BSD-style license, used specifically for PostgreSQL.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

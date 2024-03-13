@@ -1,0 +1,25 @@
+{
+  "title": "European Union Public License 1.1",
+  "spdx-id": "EUPL-1.1",
+  "description": "The \u201cEuropean Union Public Licence\u201d (EUPL) is a copyleft free/open source software license created on the initiative of and approved by the European Commission in 22 official languages of the European Union.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "trademark-use",
+    "warranty"
+  ]
+}

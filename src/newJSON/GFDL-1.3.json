@@ -1,0 +1,22 @@
+{
+  "title": "GNU Free Documentation License v1.3",
+  "spdx-id": "GFDL-1.3",
+  "description": "A copyleft license for software documentation.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "same-license",
+    "document-changes"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}

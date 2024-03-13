@@ -1,0 +1,19 @@
+{
+  "title": "Creative Commons Attribution NonCommercial NoDerivs",
+  "spdx-id": "CC-NC-ND",
+  "description": "The most restrictive creative commons license. This only allows people to download and share your work for no commercial gain and for no other purposes. You must give credit to the original author of the work, state their name and the title of the original work, and include the attribution logo found on their website here. Doesn\u2019t allow for Tivoization and provides protection from defamation for the creator.",
+  "permissions": [
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

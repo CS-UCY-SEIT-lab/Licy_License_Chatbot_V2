@@ -1,0 +1,25 @@
+{
+  "title": "Open Software License 3.0",
+  "spdx-id": "OSL-3.0",
+  "description": "OSL 3.0 is a copyleft license that does not require reciprocal licensing on linked works. It also provides an express grant of patent rights from contributors to users, with a termination clause triggered if a user files a patent infringement lawsuit.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "modifications",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "trademark-use",
+    "liability",
+    "warranty"
+  ]
+}

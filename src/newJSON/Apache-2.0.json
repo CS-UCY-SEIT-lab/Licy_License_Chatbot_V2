@@ -1,0 +1,22 @@
+{
+  "title": "Apache License 2.0",
+  "spdx-id": "Apache-2.0",
+  "description": "A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes"
+  ],
+  "limitations": [
+    "trademark-use",
+    "liability",
+    "warranty"
+  ]
+}

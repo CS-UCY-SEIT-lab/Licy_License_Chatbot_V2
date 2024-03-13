@@ -1,0 +1,21 @@
+{
+  "title": "Apple MIT License",
+  "spdx-id": "AML",
+  "description": "A highly permissive license nearly identical to the MIT license but with some added trademark restrictions.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

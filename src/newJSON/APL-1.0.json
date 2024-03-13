@@ -1,0 +1,23 @@
+{
+  "title": "Adaptive Public License 1.0",
+  "spdx-id": "APL-1.0",
+  "description": "A weak copyleft license with incredibly detailed liability and litigation protection, as well as many requirements that are only applicable in certain cases. The license itself provides a template for users to slightly modify. Carefully read the fulltext for more detailed information.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "modifications",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "document-changes",
+    "disclose-source",
+    "include-copyright"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "title": "CUA Office Public License v1.0",
+  "spdx-id": "CUA-OPL-1.0",
+  "description": "A Mozilla Public License-style license, where you have to put a notice (specified in the license's Exhibit A) in each source file. It is permissive but forces you to fulfill a number of requirements.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "document-changes",
+    "disclose-source",
+    "network-use-disclose"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

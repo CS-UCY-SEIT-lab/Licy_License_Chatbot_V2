@@ -1,0 +1,22 @@
+{
+  "title": "Creative Commons Attribution NonCommercial ShareAlike",
+  "spdx-id": "CC-NC-SA",
+  "description": "A creative commons license that bans commercial use and requires you to release any modified works under this license. You must give credit to the original author of the work, state their name and the title of the original work, say that you modified the work if you did and include the attribution logo found on their website here. Doesn\u2019t allow for Tivoization and provides protection from defamation for the creator.",
+  "permissions": [
+    "modifications",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Microsoft Public License",
+  "spdx-id": "MS-PL",
+  "description": "An open source license with a patent grant.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "patent-use",
+    "private-use",
+    "sublicense"
+  ],
+  "conditions": [
+    "include-copyright"
+  ],
+  "limitations": [
+    "warranty",
+    "trademark-use"
+  ]
+}

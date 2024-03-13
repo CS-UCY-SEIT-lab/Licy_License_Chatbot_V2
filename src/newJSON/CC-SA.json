@@ -1,0 +1,23 @@
+{
+  "title": "Creative Commons Attribution Share Alike",
+  "spdx-id": "CC-SA",
+  "description": "This creative commons license is very similar to the regular Attribution license, but requires you to release all derivative works under this same license. You must give credit to the original author of the work, state their name and the title of the original work, say that you modified the work if you did and include the attribution logo, found on their website here. Doesn\u2019t allow for Tivoization and provides protection from defamation for the creator.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

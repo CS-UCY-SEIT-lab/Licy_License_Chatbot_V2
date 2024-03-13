@@ -1,0 +1,25 @@
+{
+  "title": "Common Development and Distribution License",
+  "spdx-id": "CDDL-1.0",
+  "description": "This is a weak copyleft license used by Sun Microsystems that includes explicit patent grants. It is similar to MPL and EPL.  You can distribute binaries under a proprietary license, as long as original and modified source code under CDDL is made available.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

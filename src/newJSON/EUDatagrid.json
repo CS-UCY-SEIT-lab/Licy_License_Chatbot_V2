@@ -1,0 +1,23 @@
+{
+  "title": "EU DataGrid Software License",
+  "spdx-id": "EUDatagrid",
+  "description": "A highly permissive license tailored specifically for EU DataGrid software.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "network-use-disclose",
+    "same-license"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

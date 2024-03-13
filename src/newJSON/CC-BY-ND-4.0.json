@@ -1,0 +1,21 @@
+{
+  "title": "Creative Commons Attribution-NoDerivatives 4.0 International",
+  "spdx-id": "CC-BY-ND-4.0",
+  "description": "Creative Commons Attribution-NoDeratives license in International version 4, that allows to do what they want except modifying.",
+  "permissions": [
+    "commercial-use",
+    "distribution",
+    "private-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "same-license",
+    "document-changes"
+  ],
+  "limitations": [
+    "liability",
+    "warranty",
+    "trademark-use"
+  ]
+}

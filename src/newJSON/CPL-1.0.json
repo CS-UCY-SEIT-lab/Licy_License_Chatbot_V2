@@ -1,0 +1,23 @@
+{
+  "title": "Common Public License 1.0",
+  "spdx-id": "CPL-1.0",
+  "description": "A precursor to the Eclipse license that is also very explicit in its terms. This is a weak copyleft license, like MPL and EPL. This is superseded by the Eclipse Public License.",
+  "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use"
+  ],
+  "conditions": [
+    "include-copyright",
+    "disclose-source",
+    "same-license",
+    "network-use-disclose"
+  ],
+  "limitations": [
+    "liability",
+    "warranty"
+  ]
+}
