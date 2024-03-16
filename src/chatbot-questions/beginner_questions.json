@@ -1,0 +1,44 @@
+{
+  "questions": [
+    "Do you want to permit modifications to your software?",
+    "Do you want to allow the licensed material and derivatives to be used for commercial purposes?"
+  ],
+
+  
+  "question_explanations":[
+    "This asks if you're okay with others changing your code. Depending on your preference, you can allow full modifications, specific types of changes, or none at all.",
+    "Here, you decide if others can use your software or modified versions (derivatives) to make money. Allowing this may require charging a fee or offering specific terms."
+  ],
+
+  "options":
+  [
+    ["Freedom","Minimum Restrictions","Restrictive"],
+    ["Yes","No"]
+  ],
+
+  "option_explanations":
+   [
+     ["Explanation1","Explanation2","Explanation3"],
+     ["Explanation4","Explanation5","Explanation6"]
+   ],
+
+   "option_license_subsets":{
+    "Freedom": ["GPL2.0","GPL3.0"],
+    "Minimum Restrictions": null ,
+    "Restrictive": ["AFL-3.0","AML"],
+    "Yes":["EPL-1.0","EPL-2.0"],
+    "No": ["EUPL-1.1","ECL-2.0"]
+   },
+   "option_paths":{
+    "Freedom": "end",
+    "Minimum Restrictions": "1" ,
+    "Restrictive": "end",
+    "Yes":"end",
+    "No": "end"
+   },
+
+   "restrictions":["freedom","mild-restrictions","restrictive"],
+   "categories":["copyleft", "permissive"]
+  
+
+}

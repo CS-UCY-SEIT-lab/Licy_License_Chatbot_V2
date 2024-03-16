@@ -111,7 +111,7 @@ slots:
   #       entity: answer
   #       intent: answer_question
 actions:
-  - utter_start_tutorial
+  - action_start_tutorial
   - action_ask_question
   - action_get_license_info
   - action_get_license
@@ -131,9 +131,9 @@ responses:
     - text: Great, carry on!
   utter_goodbye:
     - text: Bye
-  utter_start_tutorial:
-    - text: Let me guide you find the appropriate license through a series of questions.
-    - text: Let me help you find the license that will suit best on your needs.
+  # utter_start_tutorial:
+  #   - text: Let me guide you find the appropriate license through a series of questions. Can you please choose your knowledge on Software Licenses?
+  #   - text: Let me help you find the license that will suit best on your needs. Can you please choose your knowledge on Software Licenses?
   utter_iamabot:
     - text: I am a bot, powered by Rasa.
   utter_order_pizza:

@@ -413,13 +413,21 @@ class LicenseInfoProvider(Action):
     ) -> List[Dict[Text, Any]]:
         # license_name = tracker.get_slot("license_name")
         # Do something with the parameters
+        read_licenses_info("./licensesJSON/")
         print("Confirmed License: ", tracker.get_slot("confirmed_license_name"))
         index = titles.index(tracker.get_slot("confirmed_license_name"))
-        license_text = ""
-        for line in licenses_text[index]:
-            license_text += line + "\n"
+        license_id = [licenses[index].id]
+        license_permissions, license_titles = getLicenseInfo(license_id)
+        print("License id: ", license_id)
+        json_mess = {
+            "key": "license_info",
+            "license_id": license_id,
+            "license_titles": license_titles,
+            "license_permissions": license_permissions,
+        }
         dispatcher.utter_message(
-            text=f"Here is the License full text: \n {license_text}"
+            text=f"{licenses[index].id} ({licenses[index].title}) : \n {licenses[index].description}",
+            json_message=json_mess,
         )
 
         return []
@@ -526,9 +534,9 @@ class LicenseSuggestion(Action):
         return [AllSlotsReset()]
 
 
-class FinishQuestion(Action):
+class start_Tutorial(Action):
     def name(self) -> Text:
-        return "action_finish_tutorial"
+        return "action_start_tutorial"
 
     def run(
         self,
@@ -536,26 +544,29 @@ class FinishQuestion(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Finished")
-
-        return []
-
-
-class AskQuestion(Action):
-    def name(self) -> Text:
-        return "action_ask_question"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
-
-        answer = tracker.latest_message["text"]
-        dispatcher.utter_message(text="Question")
-        if "Stop" in answer or "stop" in answer:
-            dispatcher.utter_message(text="Finished")
+        output_message = "Let me guide you find the appropriate license through a series of questions. Can you please choose your knowledge on Software Licenses?"
+        json_mess = {
+            "key": "start-tutorial",
+        }
+        dispatcher.utter_message(text=output_message, json_message=json_mess)
 
         return []
+
+
+# class AskQuestion(Action):
+#     def name(self) -> Text:
+#         return "action_ask_question"
+
+#     def run(
+#         self,
+#         dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: Dict[Text, Any],
+#     ) -> List[Dict[Text, Any]]:
+
+#         answer = tracker.latest_message["text"]
+#         dispatcher.utter_message(text="Question")
+#         if "Stop" in answer or "stop" in answer:
+#             dispatcher.utter_message(text="Finished")
+
+#         return []

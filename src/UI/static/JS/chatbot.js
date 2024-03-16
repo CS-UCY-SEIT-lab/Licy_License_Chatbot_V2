@@ -16,8 +16,19 @@
 //     });
 // });
 var answer_counter=1;
+var question_counter=1;
 var details_object= {};
 
+function displayOptions(element,options){
+console.log("Options: "+options)
+let options_block= `
+<div class="options-block">
+<button class="orange-block option knowledge-level-option" >${options[0]}</button>
+<button class="green-block option knowledge-level-option">${options[1]}</button>
+</div>
+`;
+element.innerHTML+=options_block;
+}
 function addMoreInfoIcon(container){
     // Create span element
     var moreInfoIconSpan = document.createElement("span");
@@ -185,11 +196,14 @@ function askChatbot(message){
             console.log(data.info)
             if (data.info !== null){
 
-                if(data.info.key === "permission_suggested_licenses"){
+                if(data.info.key === "permission_suggested_licenses" || data.info.key=== "license_info"){
                     displayPermissionTable(data);
                     addMoreInfoIcon(chatBlock)
-                    
-
+                }
+                else if(data.info.key === "start-tutorial"){
+                    displayOptions(
+                        document.getElementById("conversation"),data.info.options);
+                    // addMoreInfoIcon(chatBlock)
                 }
             }
             
@@ -240,6 +254,8 @@ function handleUserInput(){
     // Create question-block element
     var questionBlock = document.createElement("div");
     questionBlock.classList.add("question-block");
+    questionBlock.id=`question-${question_counter}`
+    question_counter++;
     questionBlock.textContent = user_text; // Set text content
 
     // Append userIconBlock and questionBlock to chatBlock

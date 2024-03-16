@@ -159,12 +159,12 @@ body{
 }
 .option {
   height: 50px;
-  width:130px;
+  width: fit-content;
   text-align: center;
   border: 2px solid white; /* Set the white border */
   background-color: transparent; /* Set the background color to transparent */
   margin: 10px; /* Add margin for spacing */
-  padding: 10px;
+  padding: 0 30px;
   border-radius: 20px;
   color:white;
   font-family: 'Montserrat';
@@ -175,13 +175,13 @@ body{
   margin-left: 180px;
   margin-top: 10px;
 }
-.yes-block:hover{
+.green-block:hover{
   background-color: rgb(39, 203, 39);
 }
-.no-block:hover{
+.red-block:hover{
   background-color: red;
 }
-.neutral-block:hover{
+.orange-block:hover{
   background-color: orange;
 }
 .green{
@@ -362,6 +362,12 @@ body{
   overflow: auto;
   display:none;
 
+}
+#header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
 }
 #close-icon{
   position: absolute;

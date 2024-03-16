@@ -4,7 +4,37 @@ import asyncio
 import json
 from flask_cors import CORS
 from License import License
+from BeginnerTree import BeginnerTree
+from BasicTree import BasicTree
 import requests
+
+
+def read_beginner_questions(filepath, licenses):
+    options = []
+    option_explanations = []
+
+    with open(filepath, "r") as file:
+        data = json.load(file)
+
+    # Extract the arrays from the JSON data
+    questions = data["questions"]
+    question_explanations = data["question_explanations"]
+    options = data["options"]
+    option_explanations = data["option_explanations"]
+    option_license_subsets = data["option_license_subset"]
+    option_paths = data["option_paths"]
+
+    # restrictions = data["restrictions"]
+    # categories = data["categories"]
+
+    return (
+        questions,
+        question_explanations,
+        options,
+        option_explanations,
+        option_license_subsets,
+        option_paths,
+    )
 
 
 def read_file_paths():
@@ -40,13 +70,18 @@ def extract_data(parsed_data):
             answer += dictionary["text"]
         elif "custom" in dictionary:
             info = dictionary["custom"]
+            if info["key"] == "start-tutorial":
+                info = {
+                    "key": "start-tutorial",
+                    "options": ["Beginner", "Have knowledge"],
+                }
 
     print("Answer", answer)
     print("Info", info)
     return answer, info
 
 
-def read_licenses2(folder_path):
+def read_licenses(folder_path):
     licenses = []
     filenames = list_files_in_directory(folder_path)
     for filename in filenames:

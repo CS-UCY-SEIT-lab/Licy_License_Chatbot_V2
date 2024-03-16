@@ -447,6 +447,7 @@ nlu:
       - Can you suggest me some licenses which "[do not accept](allowed_word)" "[modifications](allowed_permissions)","[trademark-use](allowed_permissions)","[sublicensing](allowed_permissions)" "[isn't demand](restricted_word)" "[same-license](restricted_permissions)","[include-copyright](restricted_permissions)" "[doesn't give](offered_word)" "[warranty](offered_permissions)","[liability](offered_permissions)"
       - Suggest me some licenses that "[dont accept](allowed_word)" "[private-use](allowed_permissions)","[modifications](allowed_permissions)","[trademark-use](allowed_permissions)" "[do not require](restricted_word)" "[document-changes](restricted_permissions)","[network-use-diclose](restricted_permissions)","[same-license](restricted_permissions)","[include-copyright](restricted_permissions)" "[doesn't give](offered_word)" "[liability](offered_permissions)"
       - Tell me some licenses that "[aren't allow](allowed_word)" "[modifications](allowed_permissions)","[distribution](allowed_permissions)","[commercial-use](allowed_permissions)","[private-use](allowed_permissions)","[patent-use](allowed_permissions)" "[dont require](restricted_word)" "[same-license](restricted_permissions)" "[give](offered_word)" "[liability](offered_permissions)","[warranty](offered_permissions)"
+      
   - intent: ask_for_license_tutorial
     examples: |
       - Can you help me find a license for my software?
