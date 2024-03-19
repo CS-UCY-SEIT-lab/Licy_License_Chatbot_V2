@@ -15,6 +15,9 @@ body{
     overflow: auto;
     height: 82%;
   }
+  .arrow-icon{
+    margin-top: 20px;
+  }
   .dropdown-arrow{
     color: white;
     font-size: 25px;
@@ -158,13 +161,13 @@ body{
   border-radius: 100px;
 }
 .option {
-  height: 50px;
+  /* height: 50px; */
   width: fit-content;
   text-align: center;
   border: 2px solid white; /* Set the white border */
   background-color: transparent; /* Set the background color to transparent */
   margin: 10px; /* Add margin for spacing */
-  padding: 0 30px;
+  padding: 15px;
   border-radius: 20px;
   color:white;
   font-family: 'Montserrat';

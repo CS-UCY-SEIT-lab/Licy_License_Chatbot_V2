@@ -23,7 +23,7 @@
    ],
 
    "option_license_subsets":{
-    "Freedom": ["GPL2.0","GPL3.0"],
+    "Freedom": ["GPL-2.0","GPL-3.0"],
     "Minimum Restrictions": null ,
     "Restrictive": ["AFL-3.0","AML"],
     "Yes":["EPL-1.0","EPL-2.0"],
@@ -35,6 +35,13 @@
     "Restrictive": "end",
     "Yes":"end",
     "No": "end"
+   },
+   "option_colors":{
+    "Freedom": "green",
+    "Minimum Restrictions": "orange" ,
+    "Restrictive": "red",
+    "Yes":"green",
+    "No": "red"
    },
 
    "restrictions":["freedom","mild-restrictions","restrictive"],

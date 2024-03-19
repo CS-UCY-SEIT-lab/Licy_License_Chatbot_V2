@@ -19,12 +19,208 @@ var answer_counter=1;
 var question_counter=1;
 var details_object= {};
 
+function createChatBlock(message,timeout){
+        var chatBlock = document.createElement("div");
+        chatBlock.classList.add("chat-block");
+
+        // Create bot-icon-block element
+        var botIconBlock = document.createElement("div");
+        botIconBlock.classList.add("bot-icon-block");
+
+        // Create bot-icon-text element
+        var botIconText = document.createElement("div");
+        botIconText.classList.add("bot-icon-text");
+        botIconText.textContent = "Bot"; // Set text content
+
+        // Create bot-icon element
+        var botIcon = document.createElement("div");
+        botIcon.classList.add("bot-icon");
+
+        // Create bot-image element
+        var botImage = document.createElement("img");
+        botImage.classList.add("bot-image");
+        botImage.setAttribute("src", "/static/images/bot.png");
+        botImage.setAttribute("alt", "A bot icon");
+
+        // Append botImage to bot-icon
+        botIcon.appendChild(botImage);
+
+        // Append botIconText and botIcon to botIconBlock
+        botIconBlock.appendChild(botIconText);
+        botIconBlock.appendChild(botIcon);
+
+
+        // Create question-block element
+        var questionBlock = document.createElement("div");
+        questionBlock.classList.add("question-block");
+        questionBlock.textContent = message; // Set text content
+        
+       
+
+        // Create load container element
+        var loadContainer = document.createElement("div");
+        loadContainer.classList.add("load");
+
+        // Create three progress divs and append them to the load container
+        for (var i = 0; i < 3; i++) {
+            var progressDiv = document.createElement("div");
+            progressDiv.classList.add("progress");
+            loadContainer.appendChild(progressDiv);
+            
+        }
+
+        // Append load container to a parent element (assuming you have a parent element with id "container")
+        
+        
+        // Append botIconBlock and questionBlock to chatBlock
+        chatBlock.appendChild(botIconBlock);
+        
+
+        
+        if(timeout){
+            chatBlock.appendChild(loadContainer);
+            setTimeout(function() {
+                loadContainer.remove();
+                chatBlock.appendChild(questionBlock);
+                questionBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+                document.getElementById("message-component").style.display="flex"
+                
+            }, 2000);
+        }
+        else{
+            chatBlock.appendChild(questionBlock);
+            questionBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+        }
+        document.getElementById("conversation").appendChild(chatBlock);
+        return chatBlock
+        
+}
+function displaySubset(subset){
+    chatBlock=createChatBlock(subset,false)
+
+    $.ajax({
+        type: "POST",
+        url: '/retrieve-license-info',
+        contentType: 'application/json',
+        data: JSON.stringify({ license_ids: subset}),
+        success: function(data) {
+            
+            displayPermissionTable(data)
+            addMoreInfoIcon(chatBlock)
+        }
+    
+    });
+
+    
+}
+function handleAnswer(element,color) {
+   
+    element.classList.add(color);
+   
+
+    var elements = document.getElementsByClassName('option');
+
+// Iterate through the elements and disable onClick
+    for (var i = 0; i < elements.length; i++) {
+    // Store a reference to the current element
+        var currentElement = elements[i];
+
+    // Disable the existing onClick function
+        currentElement.removeAttribute('onclick');
+    }
+    $.ajax({
+        type: "POST",
+        url: '/questionnaire',
+        contentType: 'application/json',
+        data: JSON.stringify({ answer: element.textContent }),
+        success: function(data) {
+            console.log("From Quesstionnaire call:  ",data);
+            if (data['finished']){
+                displaySubset(data.option_license_subsets[element.textContent])
+            }
+            else{
+                displayQuestion(data)
+            }
+        }
+    
+    });
+
+
+}
+function handleExplanation(element){
+    const question_id= element.id.slice(-1)
+    const explanation_block= document.getElementById('explanation-block-'+question_id);
+    if (explanation_block.style.display==='block') {
+        explanation_block.style.display='none';
+        element.firstChild.className="";
+        element.firstChild.classList.add('bi',"bi-arrow-down-circle-fill","dropdown-arrow");
+    }
+    else{
+        explanation_block.style.display='block';
+        explanation_block.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+        element.firstChild.className="";
+        element.firstChild.classList.add('bi',"bi-arrow-up-circle-fill","dropdown-arrow");
+    }   
+}
+function displayQuestion(data){
+    var element=document.getElementById("conversation");
+    
+    var htmlString=`<div class="chat-block">
+    <div class="bot-icon-block">
+          <div class="bot-icon-text">Bot</div>
+          <div class="bot-icon">
+            <img class="bot-image" src="/static/images/bot.png" alt="">
+          </div>
+        </div>
+    <div id="question-${question_counter}" class="question-block">${data.question}</div>
+    <span class="arrow-icon" id="arrow-icon-${question_counter}"><i class="bi bi-arrow-down-circle-fill dropdown-arrow"></i></span>
+    </div>
+    <div class="explanation-block" id="explanation-block-${question_counter}">${data.question_explanation}</div>
+    <div class="options-block">`;
+
+    
+
+    var options= ""
+    for (option of data.options){
+        options+=`<button class="option ${data.option_colors[option]}-block" onclick="handleAnswer(this,'${data.option_colors[option]}')">${option}</button>`
+    }
+    htmlString=htmlString+options;
+    element.insertAdjacentHTML('beforeend', htmlString);
+    document.querySelector('#arrow-icon-'+question_counter).addEventListener('click', function() {
+    handleExplanation(this);
+    });
+   
+    question_element=document.getElementById("question-"+question_counter);
+    question_element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    question_counter++;
+}
+function startTutorial(element){
+    if (element.textContent == "Beginner")
+        element.classList.add("orange")
+    else
+        element.classList.add("green")
+
+    let option_buttons=document.querySelectorAll(".option")
+    for (option of option_buttons){
+        option.removeAttribute("click");
+    }
+    $.ajax({
+        type: "POST",
+        url: '/start-tutorial',
+        contentType: 'application/json',
+        data: JSON.stringify({ type: element.textContent }),
+        success: function(data) {
+            displayQuestion(data)
+        }
+    
+    });
+}
 function displayOptions(element,options){
 console.log("Options: "+options)
 let options_block= `
 <div class="options-block">
-<button class="orange-block option knowledge-level-option" >${options[0]}</button>
-<button class="green-block option knowledge-level-option">${options[1]}</button>
+<button id="beginner-button" class="orange-block option knowledge-level-option" onclick="startTutorial(this)" >${options[0]}</button>
+<buttton id="basic-button" class="green-block option knowledge-level-option">${options[1]}</buttton>
 </div>
 `;
 element.innerHTML+=options_block;
@@ -62,10 +258,11 @@ function addMoreInfoIcon(container){
     answer_counter++;
 }
 
-function displayPermissionTable(data){
-    let license_ids=data.info.license_ids;
-    let license_titles=data.info.license_titles;
-    let license_permissions=data.info.license_permissions;
+function displayPermissionTable(info){
+    console.log("Data Info",info);
+    let license_ids=info.license_ids;
+    let license_titles=info.license_titles;
+    let license_permissions=info.license_permissions;
 
     var license_instance = license_permissions[0]
     var allkeys=[...Object.keys(license_instance[0]),...Object.keys(license_instance[1]),...Object.keys(license_instance[2])];
@@ -116,7 +313,6 @@ function displayPermissionTable(data){
     </div>`;
     element.insertAdjacentHTML('beforeend', htmlCode);
     details_object[`${answer_counter}`]=element;
-    console.log("Element Inner HTML:"+element.innerHTML);
     console.log(details_object)
    
     // document.getElementById("more-details-component").style.display="block";
@@ -197,7 +393,7 @@ function askChatbot(message){
             if (data.info !== null){
 
                 if(data.info.key === "permission_suggested_licenses" || data.info.key=== "license_info"){
-                    displayPermissionTable(data);
+                    displayPermissionTable(data.info);
                     addMoreInfoIcon(chatBlock)
                 }
                 else if(data.info.key === "start-tutorial"){
