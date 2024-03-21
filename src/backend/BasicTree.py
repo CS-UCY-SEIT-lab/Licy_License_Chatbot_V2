@@ -5,6 +5,7 @@ class BasicTree:
         self.initial_subset = [license for license in list(initial_subset)]
         self.current_node = parent
         self.current_subset = [license for license in list(initial_subset)]
+        self.option_colors = {"Yes": "green", "No": "red", "Don't Care": "orange"}
 
     def empty_subset(self):
         list_positive = list(
@@ -84,31 +85,8 @@ class BasicTree:
             return 1
         return 0
 
-    # def start_questionnaire(self):
-    #     self.current_node = self.parent
-    #     questions = 1
-    #     answer = None
-    #     while questions:
-    #         print(
-    #             "\n ------------------------------------------------------------------------------------------ \n"
-    #         )
-    #         print("     " + self.current_node.questions[0])
-    #         print(
-    #             "\n ------------------------------------------------------------------------------------------ \n"
-    #         )
-    #         answer = input("Answer: ")
 
-    #         if answer == "yes" or answer == "Yes" or answer == "y":
-    #             questions = self.positive_answer()
-    #         elif answer == "no" or answer == "No" or answer == "n":
-    #             questions = self.negative_answer()
-    #         else:
-    #             questions = self.neutral_answer()
-
-    #         self.current_node.print_info()
-    #         print("Current Subset: ", self.current_subset)
-
-    async def start_questionnaire2(self, request):
+    async def start_questionnaire(self, request):
         finished = 0
         if request == "yes" or request == "Yes" or request == "y":
             finished = self.positive_answer()
@@ -125,6 +103,8 @@ class BasicTree:
             "options": self.current_node.options,
             "finished": finished,
             "question_explanation": self.current_node.question_explanation,
+            "option_colors": self.option_colors,
+            "type": "Basic",
         }
 
     def refresh(self):

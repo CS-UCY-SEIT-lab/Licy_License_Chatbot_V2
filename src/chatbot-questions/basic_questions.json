@@ -1,0 +1,44 @@
+{
+    "questions": [
+      "Do you want to permit modifications to your software?",
+      "Do you want to allow the licensed material and derivatives to be used for commercial purposes?",
+      "Do you want your software to be used in proprietary (closed-source) applications?",
+      "Do you want to permit sublicensing of your software?",
+      "Do you want modifications to your software to be released under the same license when distributing the licensed material",
+      "Do you want to specify that any modifications made to your software must be indicated when redistributed?",
+      "Allow users ,who interact with the licensed material via a network, to receive a copy of the source code?",
+      "Are you concerned about copyright, patents, or trademarks in your work?",
+      "Do you want the original copyright to be retained?",
+      "Do you want to permit the rights to practice patent claims of contributors to the code?",
+      "Do you want to permit the use of trademarks in your work?"
+    ],
+    "keys": [
+      "modifications",
+      "commercial-use",
+      "!disclose-source",
+      "sublicense",
+      "same-license",
+      "document-changes",
+      "network-use-disclose",
+      "None",
+      "include-copyright",
+      "patent-use",
+      "!trademark-use"
+    ],
+    "question_explanations":[
+      "This asks if you're okay with others changing your code. Depending on your preference, you can allow full modifications, specific types of changes, or none at all.",
+      "Here, you decide if others can use your software or modified versions (derivatives) to make money. Allowing this may require charging a fee or offering specific terms.",
+      "This asks if programs combining your software can be kept closed-source (code hidden), or if the combined code must be shared openly. Consider how important open access is to you.",
+      "This means others who get a license from you can grant licenses to others (sublicense). Decide if you want control over who uses your software or prefer others to manage it further.",
+      "This affects how changes to your software are shared. You can require the same license (copyleft) or allow different licenses (permissive). Consider if you want consistent terms or flexibility.",
+      "This asks if you want people to mention changes they made when sharing your software or derivatives. This helps track modifications and protect your original work.",
+      "This applies to software accessed over a network (like websites). You can decide if users interacting with it (e.g., browsing a site) need access to the underlying code. Consider transparency and potential misuse.",
+      "This asks if you want legal protection for your software's code, features, or name. Copyright covers the code, patents protect specific functionalities, and trademarks safeguard unique names/logos.",
+      "Even if you share your software, you can typically retain copyright unless stated otherwise. This allows you to claim ownership and potentially seek legal action if your rights are violated.",
+      "If others contribute code to your project, you can decide if they retain patent rights related to their additions. This affects who can use those specific functionalities.",
+      "This asks if others can use your unique names or logos within their applications. Decide if you want to control how your brand identity is used."
+    ]
+    
+    
+  
+  }

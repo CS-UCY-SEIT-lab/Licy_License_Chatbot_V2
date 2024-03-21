@@ -136,7 +136,11 @@ function handleAnswer(element,color) {
         success: function(data) {
             console.log("From Quesstionnaire call:  ",data);
             if (data['finished']){
-                displaySubset(data.option_license_subsets[element.textContent])
+                if(data["type"] == "Beginner")
+                    displaySubset(data.option_license_subsets[element.textContent])
+                else{
+                    displaySubset(data['current_subset'])
+                }
             }
             else{
                 displayQuestion(data)
@@ -220,7 +224,7 @@ console.log("Options: "+options)
 let options_block= `
 <div class="options-block">
 <button id="beginner-button" class="orange-block option knowledge-level-option" onclick="startTutorial(this)" >${options[0]}</button>
-<buttton id="basic-button" class="green-block option knowledge-level-option">${options[1]}</buttton>
+<buttton id="basic-button" class="green-block option knowledge-level-option" onclick="startTutorial(this)">${options[1]}</buttton>
 </div>
 `;
 element.innerHTML+=options_block;

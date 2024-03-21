@@ -1,7 +1,9 @@
 {
-    "questions_file": "../Chatbot Questions/questions_json.json",
+    "questions_file": "../chatbot-questions/questions_json.json",
     "licenses_folder": "../newJSON/",
-    "dependencies_file": "../Chatbot Questions/encoded_dependencies.txt",
+    "dependencies_file": "../chatbot-questions/encoded_dependencies.txt",
     "templates_folder": "../UI/templates",
-    "static_folder": "../UI/static"
+    "static_folder": "../UI/static",
+    "basic_questions": "../chatbot-questions/basic_questions.json",
+    "beginner_questions": "../chatbot-questions/beginner_questions.json"
 }

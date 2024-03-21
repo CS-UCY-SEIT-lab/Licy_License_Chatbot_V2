@@ -41,6 +41,7 @@ class BeginnerTree:
             "option_explanations": option_explanations,
             "option_license_subsets": self.option_license_subsets,
             "option_colors": self.option_colors,
+            "type": "Beginner",
             "finished": finished,
         }
 

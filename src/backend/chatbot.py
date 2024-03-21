@@ -7,6 +7,7 @@ from flask_cors import CORS
 from License import License
 from BeginnerTree import BeginnerTree
 from BasicTree import BasicTree
+from Node import Node
 import requests
 import secrets
 
@@ -39,6 +40,53 @@ def read_beginner_questions(filepath):
     )
 
 
+def read_basic_questions(filepath, licenses):
+    key_questions = {}
+    positive_subsets = []
+    negative_subsets = []
+    print(paths)
+    with open(filepath, "r") as file:
+        data = json.load(file)
+
+    # Extract the arrays from the JSON data
+    questions = data["questions"]
+    keys = data["keys"]
+    question_explanations = data["question_explanations"]
+
+    for i in range(len(keys)):
+        key_questions[keys[i]] = questions[i]
+
+    for key, value in key_questions.items():
+        questions.append(value)
+        positive_subset = []
+        negative_subset = []
+        for license in licenses:
+            if "None" in key:
+                positive_subset.append(license.id)
+                negative_subset.append(license.id)
+            else:
+                if key.startswith("!"):
+                    if license.all_rights[key[1:]]:
+                        negative_subset.append(license.id)
+                    else:
+                        positive_subset.append(license.id)
+                else:
+                    if license.all_rights[key]:
+                        positive_subset.append(license.id)
+                    else:
+                        negative_subset.append(license.id)
+
+        positive_subsets.append(positive_subset)
+        negative_subsets.append(negative_subset)
+
+    return (
+        questions,
+        positive_subsets,
+        negative_subsets,
+        question_explanations,
+    )
+
+
 def read_file_paths():
     config_file_path = "../file paths/filepaths.json"
 
@@ -51,7 +99,90 @@ def read_file_paths():
         "dependencies_file": config_data["dependencies_file"],
         "templates_folder": config_data["templates_folder"],
         "static_folder": config_data["static_folder"],
+        "basic_questions_file": config_data["basic_questions"],
+        "beginner_questions_file": config_data["beginner_questions"],
     }
+
+
+def get_num_nodes(file_path):
+    with open(file_path, "r") as file:
+        sequence = file.read()
+    max_value = 0
+    for line in sequence.split("\n"):
+        if line:
+            parts = line.split("->")
+            value = int(parts[0])
+
+            max_value = max(max_value, value)
+
+    return max_value
+
+
+def create_nodes(
+    file_path, questions, positive_subsets, negative_subsets, question_explanations
+):
+    nodes = []
+    for i in range(get_num_nodes(file_path)):
+        nodes.append(Node(i + 1))
+
+    with open(file_path, "r") as file:
+        lines = file.readlines()
+        lines = [line.strip() for line in lines if line.strip()]
+        line_index = 0
+
+    while line_index < len(lines):
+        line1 = lines[line_index]
+        line2 = lines[line_index + 1]
+        line3 = lines[line_index + 2]
+
+        # Process your two lines here
+        parts1 = line1.replace(" ", "").split("->")
+        parts2 = line2.replace(" ", "").split("->")
+        parts3 = line3.replace(" ", "").split("->")
+
+        node_index = int(parts1[0]) - 1
+        options = ["Yes", "No"]
+
+        if parts1[1] != "end":
+            positive_node = nodes[int(parts1[1]) - 1]
+        else:
+            positive_node = None
+
+        if parts2[1] != "end":
+            negative_node = nodes[int(parts2[1]) - 1]
+        else:
+            negative_node = None
+
+        if parts3[1] == "end":
+            neutral_node = None
+            options.append("Don't Care")
+        elif parts3[1] == "none" or parts3[1] == "None":
+            neutral_node = None
+        else:
+            neutral_node = nodes[int(parts3[1]) - 1]
+            options.append("Don't Care")
+
+        current_node = nodes[node_index]
+        current_node.build_node(
+            positive_node,
+            neutral_node,
+            negative_node,
+            [questions[node_index]],
+            positive_subsets[node_index],
+            negative_subsets[node_index],
+            options,
+            question_explanations[node_index],
+        )
+        if positive_node is not None and positive_node.id > current_node.id:
+            positive_node.set_parent(current_node)
+            # positive_node.set_subset(positive_subsets[node_index])
+        if negative_node is not None and negative_node.id > current_node.id:
+            negative_node.set_parent(current_node)
+            # negative_node.set_subset(negative_subsets[node_index])
+
+        line_index = line_index + 3
+
+    return nodes
 
 
 def list_files_in_directory(directory):
@@ -108,7 +239,8 @@ def read_licenses(folder_path):
 
 # run : rasa run actions & rasa run --enable-api --cors="*" --port 5005 --debug & python ./backend/chatbot.py
 
-licenses = read_licenses("../newJSON/")
+paths = read_file_paths()
+licenses = read_licenses(paths.get("licenses_folder"))
 
 app = Flask(__name__, template_folder="../UI/templates", static_folder="../UI/static")
 CORS(app)
@@ -172,9 +304,32 @@ def start_beginner_tutorial():
         )
         session["tree"] = jsonpickle.encode(tree)
         current_question_data = asyncio.run(tree.start_questionnaire(request=None))
-        # current_question_data["option_colors"] = option_colors
 
-        return jsonify(current_question_data)
+    else:
+        (
+            questions,
+            positive_subsets,
+            negative_subsets,
+            question_explanations,
+        ) = read_basic_questions(paths.get("basic_questions_file"), licenses)
+
+        nodes = create_nodes(
+            paths.get("dependencies_file"),
+            questions,
+            positive_subsets,
+            negative_subsets,
+            question_explanations,
+        )
+
+        tree = BasicTree(
+            nodes,
+            nodes[0],
+            set(positive_subsets[0]).union(set(negative_subsets[0])),
+        )
+        session["tree"] = jsonpickle.encode(tree)
+        current_question_data = asyncio.run(tree.start_questionnaire(request=None))
+
+    return jsonify(current_question_data)
 
 
 @app.route("/questionnaire", methods=["POST"])
