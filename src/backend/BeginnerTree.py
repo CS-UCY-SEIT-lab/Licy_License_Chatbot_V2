@@ -21,10 +21,12 @@ class BeginnerTree:
     async def start_questionnaire(self, request):
         finished = 0
         # option_license_subsets = None
+        print("Request is: ", request)
         if request is not None:
             # option_license_subsets = self.option_license_subsets[request]
-
-            if self.option_paths[request] == "end":
+            if request == "Stop":
+                finished = 1
+            elif self.option_paths[request] == "end":
                 finished = 1
             else:
                 self.current_question_id = int(self.option_paths[request])

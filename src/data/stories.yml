@@ -8,6 +8,21 @@ stories:
       - intent: mood_great
       - action: utter_happy
 
+  - story: Who are you
+    steps:
+      - intent: who_are_you
+      - action: utter_iamabot
+
+  - story: User thanks chatbot
+    steps:
+      - intent: thank
+      - action: utter_pleasure
+
+  - story: Ask for software license definition
+    steps:
+      - intent: ask_for_license_definition
+      - action: utter_license_definition
+
   - story: User agrees on license
     steps:
       - intent: ask_for_license

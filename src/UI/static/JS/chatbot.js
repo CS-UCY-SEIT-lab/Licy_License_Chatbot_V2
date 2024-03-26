@@ -19,6 +19,127 @@ var answer_counter=1;
 var question_counter=1;
 var details_object= {};
 
+function getQuestionID(elementID){
+    var regex = /(\d+)(?=\D*$)/;
+
+    // Match the last number in the string using the regular expression
+    var match = elementID.match(regex);
+
+    // If a match is found, return the last number as an integer
+    if (match) {
+        return parseInt(match[0]);
+    } else {
+        // If no match is found, return null or handle it according to your use case
+        return null;
+    }
+}
+function startBeginnerTutorial(){
+    $.ajax({
+        type: "POST",
+        url: '/start-tutorial',
+        contentType: 'application/json',
+        data: JSON.stringify({ type: "Have knowledge"}),
+        success: function(data) {
+            document.getElementById('messageBox').style.display='none'
+            document.getElementById('stop-button').style.display='inline-block'
+            displayStartTutorial(data)
+        }
+    
+    });
+}
+function closePopup(element){
+    element.parentNode.firstChild.remove()
+    element.parentNode.style.display="none"
+}
+function displayPopup(content){
+    let popup_container=document.createElement( "div" ); 
+    popup_container.className="popup-container";
+    popup_container.innerHTML=content;
+
+    let popup=document.getElementById("popup")
+    popup.prepend(popup_container)
+    popup.style.display="block"
+}
+function displayStartTutorial(data){
+    console.log("Data:",data);
+    var element=document.getElementById("conversation");
+    
+    var htmlString=`<div class="chat-block" id="start-tutorial-block">
+    <div class="bot-icon-block">
+          <div class="bot-icon-text">Bot</div>
+          <div class="bot-icon">
+            <img class="bot-image" src="/static/images/bot.png" alt="">
+          </div>
+        </div>
+    <div id="question-${question_counter}" class="question-block">${data.question}</div>
+    <span class="arrow-icon" id="arrow-icon-${question_counter}"><i class="bi bi-arrow-down-circle-fill dropdown-arrow"></i></span>
+    </div>
+    <div class="explanation-block" id="explanation-block-${question_counter}">${data.question_explanation}</div>
+    <div class="options-block">`;
+
+    
+
+    var options= ""
+    for (option of data.options){
+        options+=`<button class="option ${data.option_colors[option]}-block" onclick="handleAnswer(this,'${data.option_colors[option]}')">${option}</button>`
+    }
+    htmlString=htmlString+options;
+    element.insertAdjacentHTML('beforeend', htmlString);
+    document.querySelector('#arrow-icon-'+question_counter).addEventListener('click', function() {
+    handleExplanation(this);
+    });
+   
+    question_element=document.getElementById("question-"+question_counter);
+    question_element.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    question_counter++;
+}
+function handleStop(){
+    $.ajax({
+        type: "POST",
+        url: '/questionnaire',
+        contentType: 'application/json',
+        data: JSON.stringify({ answer: "Stop" }),
+        success: function(data) {
+            document.getElementById("messageBox").style.display="flex"
+            document.getElementById("stop-button").style.display="none"
+            
+            let starting_block=document.getElementById('start-tutorial-block')
+
+            let siblings = [starting_block];
+
+            // Traverse through the siblings using nextSibling
+            let sibling = starting_block.nextSibling;
+            while (sibling !== null) {
+                // Check if the sibling is an element node (nodeType === 1)
+                if (sibling.nodeType === 1) {
+                    // Add the sibling to the array
+                    siblings.push(sibling);
+                }
+                // Move to the next sibling
+                sibling = sibling.nextSibling;
+            }
+
+            // Remove each sibling from the DOM
+            siblings.forEach(function(sibling) {
+                sibling.remove();
+            });
+
+
+
+            // if (data['finished']){
+            //     if(data["type"] == "Beginner")
+            //         displaySubset(data.option_license_subsets[element.textContent])
+            //     else{
+            //         displaySubset(data['current_subset'])
+            //     }
+            // }
+            // else{
+            //     displayQuestion(data)
+            // }
+        }
+    
+    });
+}
 function createChatBlock(message,timeout){
         var chatBlock = document.createElement("div");
         chatBlock.classList.add("chat-block");
@@ -89,9 +210,9 @@ function createChatBlock(message,timeout){
         }
         else{
             chatBlock.appendChild(questionBlock);
-            questionBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
         }
         document.getElementById("conversation").appendChild(chatBlock);
+        chatBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
         return chatBlock
         
 }
@@ -136,10 +257,19 @@ function handleAnswer(element,color) {
         success: function(data) {
             console.log("From Quesstionnaire call:  ",data);
             if (data['finished']){
-                if(data["type"] == "Beginner")
-                    displaySubset(data.option_license_subsets[element.textContent])
+                if(data["type"] == "Beginner"){
+                    if(data.option_license_subsets[element.textContent]["type"]==="text")
+                        displaySubset(data.option_license_subsets[element.textContent]["licenses"])
+                    else if(data.option_license_subsets[element.textContent]["type"]==="popup"){
+                        displayPopup(data.option_license_subsets[element.textContent]["content"])
+
+                    }
+                    else if(data.option_license_subsets[element.textContent]["type"]==="tutorial"){
+                        startBeginnerTutorial();
+                    }
+                }
                 else{
-                    displaySubset(data['current_subset'])
+                    displaySubset(data.current_subset)
                 }
             }
             else{
@@ -152,7 +282,8 @@ function handleAnswer(element,color) {
 
 }
 function handleExplanation(element){
-    const question_id= element.id.slice(-1)
+    const question_id=getQuestionID(element.id)
+    console.log("Explanation block id: ",'explanation-block-'+question_id)
     const explanation_block= document.getElementById('explanation-block-'+question_id);
     if (explanation_block.style.display==='block') {
         explanation_block.style.display='none';
@@ -214,7 +345,9 @@ function startTutorial(element){
         contentType: 'application/json',
         data: JSON.stringify({ type: element.textContent }),
         success: function(data) {
-            displayQuestion(data)
+            document.getElementById('messageBox').style.display='none'
+            document.getElementById('stop-button').style.display='inline-block'
+            displayStartTutorial(data)
         }
     
     });
@@ -227,7 +360,8 @@ let options_block= `
 <buttton id="basic-button" class="green-block option knowledge-level-option" onclick="startTutorial(this)">${options[1]}</buttton>
 </div>
 `;
-element.innerHTML+=options_block;
+
+element.insertAdjacentHTML('beforeend', options_block);
 }
 function addMoreInfoIcon(container){
     // Create span element
@@ -246,9 +380,7 @@ function addMoreInfoIcon(container){
     moreInfoIconSpan.addEventListener('click',function(){
         let id=moreInfoIconSpan.id;
         let answer_index=id[id.length - 1];
-        console.log("answer index: ",answer_index);
         let element=details_object[answer_index];
-        console.log("Element Inner HTML:"+element.innerHTML);
         let more_details_component=document.getElementById("more-details-component");
         more_details_component.append(element);
         more_details_component.style.display="block";
@@ -406,8 +538,8 @@ function askChatbot(message){
                     // addMoreInfoIcon(chatBlock)
                 }
             }
-            
-            questionBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+            console.log("Scroll: ",questionBlock.innerHTML);
+            chatBlock.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
             document.getElementById("message-component").style.display="flex"
         }, 2000);
 

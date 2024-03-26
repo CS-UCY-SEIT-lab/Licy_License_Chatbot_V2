@@ -14,6 +14,9 @@ intents:
   - mood_unhappy
   - neutral
   - order_pizza
+  - ask_for_license_definition
+  - who_are_you
+  - thank
 entities:
   - answer
   - license_name
@@ -131,15 +134,20 @@ responses:
     - text: Great, carry on!
   utter_goodbye:
     - text: Bye
+  utter_license_definition:
+    - text: "A software license is basically a permission slip for using a piece of software. It's a legal agreement between the software developer (the licensor) and you (the licensee) that outlines how you can use the software.Think of it like a driver's license for software. Just like a driver's license gives you permission to drive a car under certain rules, a software license gives you permission to use the software under certain conditions. These conditions can include things like: 1) How many devices you can install the software on, 2) Whether you can modify the software, 3) Whether you can redistribute the software (and to whom), 4)Whether there are any fees involved. There are different types of software licenses, with some being more restrictive than others. Some common examples include open-source licenses (like MIT or Apache) that allow for free use and modification, and proprietary licenses that restrict use to specific terms set by the developer."
   # utter_start_tutorial:
   #   - text: Let me guide you find the appropriate license through a series of questions. Can you please choose your knowledge on Software Licenses?
   #   - text: Let me help you find the license that will suit best on your needs. Can you please choose your knowledge on Software Licenses?
   utter_iamabot:
-    - text: I am a bot, powered by Rasa.
+    - text: I am Licy a software license chatbot who can help you find more information about licenses. I can also guide you to find the appropriate license for your software through a series of questions.
   utter_order_pizza:
     - text: Can i have your order please?
   utter_ask_license:
     - text: "I might not know this license or you misspronounce it. Can you provide me again the license so i can check? "
+  utter_pleasure:
+    - text: "You are welcome! If you have any further questions i would be glad to help you."
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

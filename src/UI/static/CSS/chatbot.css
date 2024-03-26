@@ -205,7 +205,8 @@ body{
   width: 100%;
   z-index: 4;
 }
-.messageBox {
+#messageBox {
+  
   width: 600px;
   height: 60px;
   display: flex;
@@ -217,7 +218,7 @@ body{
   border-radius: 10px;
   border: 1px solid rgb(63, 63, 63);
 }
-.messageBox:focus-within {
+#messageBox:focus-within {
   border: 1px solid rgb(110, 110, 110);
 }
 .fileUploadWrapper {
@@ -372,7 +373,7 @@ body{
   align-items: center;
   margin-top: 40px;
 }
-#close-icon{
+#close-icon,#close-popup-icon{
   position: absolute;
   right:20px;
   top: 20px;
@@ -381,3 +382,59 @@ body{
   margin-left:20px;
   margin-top: 20px;
 }
+
+#stop-button {
+  /* display: inline-block; */
+  display: none;
+  padding: 0.9rem 1.8rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  border: 3px solid rgb(252, 70, 100);
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
+ }
+ 
+ #stop-button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(252, 70, 100);
+  transform: translateX(-100%);
+  transition: all .3s;
+  z-index: -1;
+ }
+ 
+ #stop-button:hover::before {
+  transform: translateX(0);
+ }
+
+ .popup-container{
+   color:white;
+   padding:40px;
+ }
+ #popup{
+  background-color: #212121;
+  height:80%;
+  width: 80%;
+  border-radius: 10px;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 999;
+  overflow: auto;
+  display:none;
+ }
+  span.highlighted{
+   color: aqua;
+   display: inline-block;
+ }

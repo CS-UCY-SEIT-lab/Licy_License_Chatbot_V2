@@ -85,7 +85,6 @@ class BasicTree:
             return 1
         return 0
 
-
     async def start_questionnaire(self, request):
         finished = 0
         if request == "yes" or request == "Yes" or request == "y":
@@ -94,6 +93,8 @@ class BasicTree:
             finished = self.negative_answer()
         elif request == "Don't Care" or request == "dm":
             finished = self.neutral_answer()
+        elif request == "Stop":
+            finished = 1
 
         question = self.current_node.questions[0]
         current_subset = self.current_subset

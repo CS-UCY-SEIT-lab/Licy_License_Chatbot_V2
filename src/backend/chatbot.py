@@ -1,4 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session
+import firebase_admin
+from firebase_admin import credentials, db
+from firebase_admin import firestore
 import os
 import asyncio
 import jsonpickle
@@ -10,6 +13,15 @@ from BasicTree import BasicTree
 from Node import Node
 import requests
 import secrets
+import random
+import time
+
+
+def generate_user_id():
+    timestamp = int(time.time() * 1000)  # Current timestamp in milliseconds
+    random_number = random.randint(10000, 99999)  # Generate a random number
+    user_id = f"{timestamp}{random_number}"  # Concatenate timestamp and random number
+    return user_id
 
 
 def read_beginner_questions(filepath):
@@ -44,7 +56,6 @@ def read_basic_questions(filepath, licenses):
     key_questions = {}
     positive_subsets = []
     negative_subsets = []
-    print(paths)
     with open(filepath, "r") as file:
         data = json.load(file)
 
@@ -197,7 +208,7 @@ def list_files_in_directory(directory):
 def extract_data(parsed_data):
     answer = ""
     info = None
-    print("Parsed data", parsed_data)
+
     for dictionary in parsed_data:
         if "text" in dictionary:
             answer += dictionary["text"]
@@ -209,8 +220,6 @@ def extract_data(parsed_data):
                     "options": ["Beginner", "Have knowledge"],
                 }
 
-    print("Answer", answer)
-    print("Info", info)
     return answer, info
 
 
@@ -249,6 +258,8 @@ app.secret_key = secrets.token_hex(16)
 
 @app.route("/")
 def index():
+    session["userID"] = generate_user_id()
+    print("USER ID:", session["userID"])
     return render_template("website_test.html")
 
 
@@ -258,7 +269,7 @@ def retrieve_license_info():
     permissions = []
     ids = []
     requested_licenses = request.json.get("license_ids")
-    print(requested_licenses)
+
     for requested_license_id in requested_licenses:
         for license in licenses:
             if license.id == requested_license_id:
@@ -280,7 +291,6 @@ def retrieve_license_info():
 @app.route("/start-tutorial", methods=["POST"])
 def start_beginner_tutorial():
     data = request.json
-    print(data)
 
     if data.get("type") == "Beginner":
 
@@ -302,7 +312,14 @@ def start_beginner_tutorial():
             option_paths,
             option_colors,
         )
-        session["tree"] = jsonpickle.encode(tree)
+
+        user_snapshots = user_ref.where("userID", "==", session["userID"]).get()
+        print("USER ID:", session.get("userID"))
+        if len(user_snapshots) > 0:
+            user_snapshots[0].reference.update({"Tree": jsonpickle.encode(tree)})
+        else:
+            user_ref.add({"userID": session["userID"], "Tree": jsonpickle.encode(tree)})
+
         current_question_data = asyncio.run(tree.start_questionnaire(request=None))
 
     else:
@@ -326,7 +343,14 @@ def start_beginner_tutorial():
             nodes[0],
             set(positive_subsets[0]).union(set(negative_subsets[0])),
         )
-        session["tree"] = jsonpickle.encode(tree)
+        print("USER ID:", session.get("userID"))
+        user_snapshots = user_ref.where("userID", "==", session["userID"]).get()
+
+        if len(user_snapshots) > 0:
+            user_snapshots[0].reference.update({"Tree": jsonpickle.encode(tree)})
+        else:
+            user_ref.add({"userID": session["userID"], "Tree": jsonpickle.encode(tree)})
+
         current_question_data = asyncio.run(tree.start_questionnaire(request=None))
 
     return jsonify(current_question_data)
@@ -334,13 +358,14 @@ def start_beginner_tutorial():
 
 @app.route("/questionnaire", methods=["POST"])
 def questionnaire():
-    tree = jsonpickle.decode(session.get("tree"))
+    user_snapshot = user_ref.where("userID", "==", session["userID"]).get()[0]
+    tree = jsonpickle.decode(user_snapshot.to_dict()["Tree"])
     user_request = request.json
 
     current_question_data = asyncio.run(
         tree.start_questionnaire(request=user_request.get("answer"))
     )
-    print("Current Question Data: ", current_question_data)
+    user_snapshot.reference.update({"Tree": jsonpickle.encode(tree)})
     return jsonify(current_question_data)
 
 
@@ -358,7 +383,6 @@ def ask():
         parsed_data = response.json()
 
         answer, action_json = extract_data(parsed_data)
-        # print(action_json)
 
         return jsonify({"message": answer, "info": action_json})
 
@@ -367,4 +391,8 @@ def ask():
 
 # Suggest me some licenses that allow modifications and require document-changes and  don't offer liability
 if __name__ == "__main__":
+    cred = credentials.Certificate("firebase-adminsdk.json")
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    user_ref = db.collection("users")
     app.run(debug=True)

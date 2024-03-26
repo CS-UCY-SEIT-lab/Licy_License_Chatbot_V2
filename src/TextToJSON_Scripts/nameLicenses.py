@@ -17,6 +17,8 @@ intent_text = [
     "Give me some info on ",
     "What do you know about ",
     "Have you heard about ",
+    "What is",
+    "",
 ]
 negative_positive = [
     "do ",
@@ -155,14 +157,18 @@ def writeLicensesNames():
 
 
 def writeLicensesIds():
-    licenses, ids = read_licenses_info("../licensesJSON/")
+    licenses, ids = read_licenses_info("../newJSON/")
     with open("licenses.txt", "w") as file:
-        for id in ids:
+        for license in licenses:
             file.write(
-                "- " + random.choice(intent_text) + '"[' + id + '](license_name)" \n'
+                "- "
+                + random.choice(intent_text)
+                + '"['
+                + license
+                + '](license_name)" \n'
             )
 
 
 # writeLicensesNames()
 # writeLicensesIds()
-writeSuggestionInstances2()
+writeLicensesIds()

@@ -1,47 +1,65 @@
 {
   "questions": [
-    "Do you want to permit modifications to your software?",
-    "Do you want to allow the licensed material and derivatives to be used for commercial purposes?"
+    "Which of the following best describes your situation?",
+    "Which of the following best describes your situation?",
+    "Do you want to start a more detailed questionnaire?"
   ],
 
   
   "question_explanations":[
     "This asks if you're okay with others changing your code. Depending on your preference, you can allow full modifications, specific types of changes, or none at all.",
-    "Here, you decide if others can use your software or modified versions (derivatives) to make money. Allowing this may require charging a fee or offering specific terms."
+    "Here, you decide if others can use your software or modified versions (derivatives) to make money. Allowing this may require charging a fee or offering specific terms.",
+    "Dummy text"
   ],
 
   "options":
   [
-    ["Freedom","Minimum Restrictions","Restrictive"],
+    ["I need to work in a community","I want it simple and permissive","I care about sharing and improvements","None of this work for me"],
+    ["My project isn't software","I want more choices","I don't want to choose a license"],
     ["Yes","No"]
   ],
 
   "option_explanations":
    [
-     ["Explanation1","Explanation2","Explanation3"],
-     ["Explanation4","Explanation5","Explanation6"]
+     ["Explanation1","Explanation2","Explanation3","Explanation4"],
+     ["Explanation4","Explanation5","Explanation6"],
+     ["Explanation7","Explanation8"]
    ],
 
    "option_license_subsets":{
-    "Freedom": ["GPL-2.0","GPL-3.0"],
-    "Minimum Restrictions": null ,
-    "Restrictive": ["AFL-3.0","AML"],
-    "Yes":["EPL-1.0","EPL-2.0"],
-    "No": ["EUPL-1.1","ECL-2.0"]
+    "I need to work in a community":  {"type":"popup","content": "<h1>Existing projects and communities</h1> <p>If you’re contributing to or extending an existing project, it’s almost always easiest to continue using that project’s license. To find its license, look for a file called <code class='language-plaintext highlighter-rouge'>LICENSE</code> or <code class='language-plaintext highlighter-rouge'>COPYING</code>, and skim the project’s <code class='language-plaintext highlighter-rouge'>README</code>. </p> <p>Depending on the original project’s license, using the same license might be a requirement, not just the easiest thing to do. </p> <p>Some communities have strong preferences for particular licenses. If you want to participate in one of these, it will be easier to use their preferred license, even if you’re starting a brand new project with no existing dependencies. Some examples include:</p> <ul class='bullets'> <li><span class='highlighted'>Apache</span> requires <span class='highlighted'>Apache License 2.0</span></li> <li><span class='highlighted'>Cloud Native Computing Foundation</span> requires <span class='highlighted'>Apache License 2.0</span></li> <li><span class='highlighted'>GNU</span> recommends <span class='highlighted'>GNU GPLv3</span> for most programs</li> <li><span class=''highlighted>npm packages</span> overwhelmingly use the <span class='highlighted'>MIT</span> or the very similar <span class='highlighted'>ISC</span> licenses</li> <li><span class='highlighted'>OpenBSD</span> prefers the <span class='highlighted'>ISC License</span></li> <li><span class='highlighted'>Rust</span> crates are overwhelmingly licensed <span class='highlighted'>MIT</span> <span class='highlighted'><code class='language-plaintext highlighter-rouge'>OR</code></span> <span class='highlighted'>Apache License 2.0</span></li> <li><span class='highlighted'>WordPress</span> plugins and themes must be <span class='highlighted'>GNU GPLv2</span> (or later)</li> <li><span class='highlighted'>Joomla</span> extensions and templates must be <span class='highlighted'>GNU GPLv2</span> for the PHP code.</li> </ul> <p>Communities come in all shapes and sizes, and more than one community might be pertinent (e.g., keep in mind <span class='highlighted'>your company</span> if you work for one). The examples above are <em>very</em> well established. If the community you’re building a project for doesn’t have set-in-stone licensing traditions, or you don’t see your project as part of any particular community, that’s fine: <span class='highlighted'>make your own choice of an open source license</span>.</p>"},
+    "I want it simple and permissive":  {"type":"text","licenses":["MIT","Apache-2.0"]},
+    "I care about sharing and improvements": {"type":"text","licenses":["GPL-2.0","GPL-3.0"]},
+    "None of this work for me": null,
+    "My project isn't software": {"type":"popup","content":"<h1>Non-Software Licenses</h1> <p>Open source software licenses can be also used for non-software works and are often the best choice, especially when the works in question can be edited and versioned as source. <span class='highlighted'>Choose an open source license</span>.</p> <h3 id='data-media-etc'>Data, media, etc.</h3> <p><span class='highlighted'>CC0-1.0</span>, <span class='highlighted'>CC-BY-4.0</span>, and <span class='highlighted'>CC-BY-SA-4.0</span> are <span class='highlighted'>open</span> licenses used for non-software material ranging from datasets to videos. Note that Creative Commons does <span class='highlighted'>not recommend its licenses be used for software</span> or hardware.</p> <h3 id='documentation'>Documentation</h3> <p>Any open source software license or open license for media (see <span class='highlighted'>above</span>) also applies to software documentation. If you use different licenses for your software and its documentation, be sure to specify that source code examples in the documentation are also licensed under the software license.</p> <h3 id='fonts'>Fonts</h3> <p>The <span class='highlighted'>SIL Open Font License 1.1</span> keeps fonts open, allowing them to be freely used in other works.</p> <h3 id='hardware'>Hardware</h3> <p>Designs for <span class='highlighted'>open source hardware</span> ranging from furniture to <span class='highlighted'>FPGAs</span> are covered by CERN Open Hardware licenses: <span class='highlighted'>CERN-OHL-P-2.0</span> (permissive), <span class='highlighted'>CERN-OHL-W-2.0</span> (weakly reciprocal), and <span class='highlighted'>CERN-OHL-S-2.0</span> (strongly reciprocal).</p> <h3 id='mixed-projects'>Mixed projects</h3> <p>If your project contains a mix of different types of material, you can include multiple licenses, as long as you are explicit about which license applies to each part of the project.</p>"},    
+    "I want more choices": null,
+    "I don't want to choose a license": {"type":"popup","content":"<h1>No License</h1> <p>When you make a creative work (which includes code), the work is under exclusive copyright by default. Unless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation. Once the work has other contributors (each a copyright holder), “nobody” starts including you.</p> <p>Even in the absence of a license file, you may grant some rights in cases where you publish your source code to a site that requires accepting terms of service. For example, if you publish your source code in a public repository on GitHub, you have accepted the <span class='higlighted'>Terms of Service</span>, by which you allow others to view and fork your repository. Others may not need your permission if <span class='highlighted'>limitations and exceptions to copyright</span> apply to their particular situation. Neither site terms nor jurisdiction-specific copyright limitations are sufficient for the kinds of collaboration that people usually seek on a public code host, such as experimentation, modification, and sharing as fostered by an open source license.</p> <p>You don’t have to do anything to <em>not</em> offer a license. You may, however, wish to add a copyright notice and statement that you are not offering any license in a prominent place (e.g., your project’s README) so that <span class='highlighted'>users</span> don’t assume you made an oversight. If you’re going to accept others’ contributions to your non-licensed project, you may wish to explore adding a contributor agreement to your project with your lawyer so that you maintain copyright permission from contributors, even though you’re not granting the same.</p> <p>Disallowing use of your code might not be what you intend by “no license.” An <span class='highlighted'>open source license</span> allows reuse of your code while retaining copyright. If your goal is to completely opt-out of copyright restrictions, try a <span class='highlighted'>public domain dedication</span> instead.</p> <h2 id='for-users'>For users</h2> <p>If you find software that doesn’t have a license, that generally means you have no permission from the creators of the software to use, modify, or share the software. Although a code host such as GitHub may allow you to view and fork the code, this does not imply that you are permitted to use, modify, or share the software for any purpose.</p> <p>Your options:</p> <ul class='bullets'> <li><span class='highlighted'>Ask the maintainers nicely to add a license.</span> Unless the software includes strong indications to the contrary, lack of a license is probably an oversight. If the software is hosted on a site like GitHub, open an issue requesting a license and include a link to this site. If you’re bold and it’s fairly obvious what license is most appropriate, open a pull request to add a license – see “suggest this license” in the sidebar of the page for each license on this site (e.g., <span class='highlighted'>MIT</span>).</li> <li><span class='highlighted'>Don’t use the software.</span> Find or create an alternative that is under an open source license.</li> <li><span class='highlighted'>Negotiate a private license.</span> Bring your lawyer.</li> </ul>"},
+    "Yes": {"type":"tutorial"},
+    "No": null
+
    },
    "option_paths":{
-    "Freedom": "end",
-    "Minimum Restrictions": "1" ,
-    "Restrictive": "end",
-    "Yes":"end",
-    "No": "end"
+    "I need to work in a community": "end",
+    "I want it simple and permissive": "end" ,
+    "I care about sharing and improvements": "end",
+    "None of this work for me":"1",
+    "My project isn't software": "end",
+    "I want more choices": "2",
+    "I don't want to choose a license" : "end",
+    "Yes": "end",
+    "No" : "end"
+
    },
    "option_colors":{
-    "Freedom": "green",
-    "Minimum Restrictions": "orange" ,
-    "Restrictive": "red",
-    "Yes":"green",
-    "No": "red"
+    "I need to work in a community": "green",
+    "I want it simple and permissive": "green" ,
+    "I care about sharing and improvements": "green",
+    "None of this work for me":"green",
+    "My project isn't software": "green",
+    "I want more choices": "green",
+    "I don't want to choose a license" : "red",
+    "Yes": "green",
+    "No" : "red"
    },
 
    "restrictions":["freedom","mild-restrictions","restrictive"],
