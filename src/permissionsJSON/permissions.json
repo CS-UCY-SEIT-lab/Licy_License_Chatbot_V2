@@ -1,0 +1,34 @@
+{
+    "permissions": [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicense",
+    "patent-use",
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-disclose",
+    "same-license",
+    "liability",
+    "warranty",
+    "trademark-use"],
+
+    "permission_explanations":[
+    "If the licensed material and derivatives may be used for commercial purposes.",
+    "If the licensed material may be modified.",
+    "If the licensed material may be distributed.",
+    "If licensed material may be used and modified in private.",
+    "If others who get a license from you can grant different licenses than the one you used to others",
+    "If this license provides an express grant of patent rights from contributors",
+    "If a copy of the license and copyright notice must be included with the licensed material in source form, but is not required for binaries.Network use is distribution",
+    "If source code must be made available when the licensed material is distributed.",
+    "If changes made to the licensed material must be documented.",
+    "If users who interact with the licensed material via network are given the right to receive a copy of the source code.",
+    "If modifications must be released under the same license when distributing the licensed material. In some cases a similar or related license may be used, or this condition may not apply to works that use the licensed material as a library.",
+    "If this license includes a limitation of liability.",
+    "If this license explicitly states that it does provide any warranty.",
+    "This license explicitly states that it does grant trademark rights, even though licenses without such a statement probably do not grant any implicit trademark rights."
+]
+}

@@ -91,6 +91,25 @@ choice_synonyms = {
     "positive": ["do", "does", "is", "are"],
     "offer": ["offer", "give", "provide", "supply", "afford"],
 }
+key_permissions = {
+    "allow": [
+        "commercial-use",
+        "modifications",
+        "distribution",
+        "private-use",
+        "sublicensing",
+        "patent-use",
+        "trademark-use",
+    ],
+    "require": [
+        "include-copyright",
+        "disclose-source",
+        "document-changes",
+        "network-use-diclose",
+        "same-license",
+    ],
+    "offer": ["liability", "warranty"],
+}
 word_values = {
     "allow": 1,
     "deny": 0,
@@ -99,6 +118,7 @@ word_values = {
     "offer": 1,
     "require": 1,
 }
+
 permission_synonyms = {
     "private-use": ["private use", "personally", "in private", "privately"],
     "commercial-use": [
@@ -309,7 +329,6 @@ def read_licenses_info(folder_path):
         licenses.append(license)
 
 
-# SASTOOOOOOO
 def getLicenseInfo(license_ids):
     license_permissions = []
     license_titles = []
@@ -370,6 +389,8 @@ def check_license_similarity(input, license_names, license_ids):
 def check_license_permisssion(license_id, permission):
     index = ids.index(license_id)
     if permission in all_permissions[index]:
+        if permission == "warranty" or permission == "liability":
+            return 0
         return 1
     return 0
 
@@ -465,13 +486,14 @@ class LicensePermissionInfo(Action):
                 permission
             )
 
+        choice, similarity = find_similar(permission, key_permissions)
         if check_license_permisssion(license_id, permission):
             dispatcher.utter_message(
-                text=f"License name: {license_name} allows {permission}"
+                text=f"License name: {license_name} {choice} {permission}"
             )
         else:
             dispatcher.utter_message(
-                text=f"License name: {license_name} doesn't allow {permission}"
+                text=f"License name: {license_name} doesn't {choice} {permission}"
             )
 
         return []
@@ -497,21 +519,29 @@ class LicenseSuggestion(Action):
         read_licenses_info("./licensesJSON/")
         message = f"Allowed permissions: {allowed_permissions} , restricted permissions: {restricted_permissions} , offered permissions: {offered_permissions} , allowed word: {allowed_word} , restricted word: {restricted_word} , offered word: {offered_word}"
         print(message)
+        license_ids = [license_id for license_id in ids]
+        output_message = f"Here are some licenses that"
 
-        license_ids, allowed_phrase = search_permissions(
-            allowed_word, allowed_permissions, ids
-        )
-        # print(license_ids)
-        license_ids, restricted_phrase = search_permissions(
-            restricted_word, restricted_permissions, license_ids
-        )
-        # print(license_ids)
-        license_ids, offered_phrase = search_permissions(
-            offered_word, offered_permissions, license_ids
-        )
-        # print(license_ids)
+        if allowed_word is not None:
+            license_ids, allowed_phrase = search_permissions(
+                allowed_word, allowed_permissions, ids
+            )
+            output_message += f" {allowed_phrase}"
 
-        output_message = f"Here are some licenses that{allowed_phrase } and{restricted_phrase} and{offered_phrase} : \n"
+        if restricted_word is not None:
+            license_ids, restricted_phrase = search_permissions(
+                restricted_word, restricted_permissions, license_ids
+            )
+            output_message += f" and {restricted_phrase}"
+
+        if offered_word is not None:
+            license_ids, offered_phrase = search_permissions(
+                offered_word, offered_permissions, license_ids
+            )
+            output_message += f" and {offered_phrase}"
+
+        output_message += " : \n"
+        # output_message = f"Here are some licenses that{allowed_phrase } and{restricted_phrase} and{offered_phrase} : \n"
         licenses_full_name = []
         for license_id in license_ids:
             index = ids.index(license_id)
@@ -529,6 +559,8 @@ class LicenseSuggestion(Action):
             "license_titles": licenses_full_name,
             "license_permissions": license_permissions,
         }
+        if(allowed_word is None and  restricted_word is None and offered_word is None) :
+            output_message="I am afraid you didn't finish your question. In more details you can find all the licenses i can suggest!"
         dispatcher.utter_message(text=output_message, json_message=json_mess)
 
         return [AllSlotsReset()]

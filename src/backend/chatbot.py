@@ -52,6 +52,15 @@ def read_beginner_questions(filepath):
     )
 
 
+def read_permissions(filepath):
+    with open(filepath, "r") as file:
+        data = json.load(file)
+    permissions = data["permissions"]
+    explanations = data["permission_explanations"]
+
+    return permissions, explanations
+
+
 def read_basic_questions(filepath, licenses):
     key_questions = {}
     positive_subsets = []
@@ -112,6 +121,7 @@ def read_file_paths():
         "static_folder": config_data["static_folder"],
         "basic_questions_file": config_data["basic_questions"],
         "beginner_questions_file": config_data["beginner_questions"],
+        "permissions_file": config_data["permissions_file"],
     }
 
 
@@ -387,6 +397,22 @@ def ask():
         return jsonify({"message": answer, "info": action_json})
 
     return jsonify({"message": "Error"})
+
+
+@app.route("/chatbot-info", methods=["POST"])
+def get_chatbot_info():
+    permissions, explanations = read_permissions(paths.get("permissions_file"))
+    license_titles = [license.title for license in licenses]
+    license_ids = [license.id for license in licenses]
+
+    return jsonify(
+        {
+            "permissions": permissions,
+            "permission_explanations": explanations,
+            "license_titles": license_titles,
+            "license_ids": license_ids,
+        }
+    )
 
 
 # Suggest me some licenses that allow modifications and require document-changes and  don't offer liability

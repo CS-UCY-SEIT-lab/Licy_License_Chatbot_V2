@@ -5,5 +5,6 @@
     "templates_folder": "../UI/templates",
     "static_folder": "../UI/static",
     "basic_questions": "../chatbot-questions/basic_questions.json",
-    "beginner_questions": "../chatbot-questions/beginner_questions.json"
+    "beginner_questions": "../chatbot-questions/beginner_questions.json",
+    "permissions_file": "../permissionsJSON/permissions.json"
 }

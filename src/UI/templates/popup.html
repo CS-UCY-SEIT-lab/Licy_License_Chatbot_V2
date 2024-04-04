@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<span id="about-chatbot" onclick="displayAboutChatbot()"><img src="{{ url_for('static', filename='images/info-icon-square.svg') }}" alt=""></span>
+<div class="popup" id="popup-chatbot-info">
+        <img id="close-popup-icon" onclick="closePopup(this)" src="{{ url_for('static', filename='images/cross-mark.svg') }}" alt="">
+      
+    <h3>What can i ask the chatbot?</h3>
+<ul>
+<li>You can ask the chatbot to give you some information(summary) about a license.</li>
+</ul>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; - Example: Can you give me some info about GPL-2.0 ?</p>
+<ul>
+<li>You can ask the chatbot if a license allows a specific permission(The permissions you can ask are listed below).</li>
+</ul>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; - Example: Does the the software license EPL-2.0 permit commercial-use ?</p>
+<ul>
+<li>You can ask the chatbot to suggest you a license through a series of questions. Different questions are listed based on your knowledge about software licenses .</li>
+</ul>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; - Example: Can you suggest me some software licenses ?</p>
+<ul>
+<li>You can ask the chatbot to suggest you some licenses that [allow] ,[restrict] and [offer] specific permissions. There is a recommended format for asking this question. For each keyword you can use a specific subset of permissions. Make sure to seperate them with 'and'(See examples below)</li>
+</ul>
+<ol>
+<li>&nbsp;allow: [commercial-use,modifications,distribution,private-use,sublicensing,patent-use,trademark-use]</li>
+<li>demand: [include-copyright,disclose-source,document-changes,network-use-disclose,same-license]</li>
+<li>offer:[liability,warranty]</li>
+</ol>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;- Example: Can you suggest me some licenses which accept distribution, sublicensing, commercial-use, modifications, private-use and does not demand document-changes and offer liability,warranty</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;- Example: Tell me some licenses that allow patent-use,trademark-use,private-use and demand same-license, disclose-source,network-use-diclose and give liability,warranty</p>
+<h3>About Licenses: </h3>
+<div id="table-container" class="table-responsive"><table id="table-element" class="table table-dark table-striped rounded-3 overflow-hidden">
+    <thead><tr><th scope="col" class="text-nowrap text-center p-3">License Names:</th><th scope="col" class="text-nowrap text-center p-3">License Ids:</th></tr></thead>
+    <tbody id="chatbot-info-license-table-body">
+
+    </tbody>
+</table>
+<h3>About Permissions: </h3>
+<div id="table-container" class="table-responsive"><table id="table-element" class="table table-dark table-striped rounded-3 overflow-hidden">
+    <thead><tr><th scope="col" class="text-nowrap text-center p-3">Permission</th><th scope="col" class="text-nowrap text-center p-3">Explanation:</th></tr></thead>
+    <tbody id="chatbot-info-permissions-table-body">
+
+    </tbody>
+</table>
+
+</div>
+</body>
+</html>

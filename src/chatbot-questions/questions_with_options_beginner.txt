@@ -1,0 +1,23 @@
+1. "Which of the following best describes your situation?"
+    Options: ["I need to work in a community","I want it simple and permissive","I care about sharing and improvements","None of this work for me"]
+
+2. "Which of the following best describes your situation?"
+    Options: ["My project isn't software","I want more choices","I don't want to choose a license"]
+    
+3. "Do you want to start a more detailed questionnaire?"
+    Options: ["Yes","No"]
+
+
+The OPTION paths based on the answer:
+
+ "option_paths":{
+    "I need to work in a community": "end",
+    "I want it simple and permissive": "end" ,
+    "I care about sharing and improvements": "end",
+    "None of this work for me":"1",
+    "My project isn't software": "end",
+    "I want more choices": "2",
+    "I don't want to choose a license" : "end",
+    "Yes": "end",
+    "No" : "end"
+}

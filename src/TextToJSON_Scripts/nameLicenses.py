@@ -37,13 +37,14 @@ negative_positive = [
     "",
     "",
 ]
+intent_of_specific_permission = [
+    "Does the [license_name] [choice] [permission] ?",
+    "The [license_name] [choice] [permission] ?",
+    "[license_name] [choice] [permission] ?",
+    "[choice] [permission] [license_name] ",
+]
 key_permissions = {
-    (
-        "permit",
-        "allow",
-        "accept",
-        "forbid",
-    ): [
+    ("permit", "allow", "accept", "forbid", "deny"): [
         "commercial-use",
         "modifications",
         "distribution",
@@ -59,8 +60,37 @@ key_permissions = {
         "network-use-diclose",
         "same-license",
     ],
-    ("offer", "give", "offer", "give"): ["liability", "warranty"],
+    ("offer", "give", "offer", "provide", "provide"): ["liability", "warranty"],
 }
+permissions = [
+    "commercial-use",
+    "modifications",
+    "distribution",
+    "private-use",
+    "sublicensing",
+    "patent-use",
+    "trademark-use",
+    "include-copyright",
+    "disclose-source",
+    "document-changes",
+    "network-use-diclose",
+    "same-license",
+    "liability",
+    "warranty",
+]
+choices = [
+    "permit",
+    "allow",
+    "accept",
+    "forbid",
+    "deny",
+    "require",
+    "demand",
+    "give",
+    "offer",
+    "provide",
+]
+
 intent_suggest_text = [
     "Tell me some licenses that",
     "Suggest me some licenses that",
@@ -143,6 +173,146 @@ def writeSuggestionInstances2():
             file.write("- " + sentence + "\n")
 
 
+def writeSuggestionInstances3():
+    choice_keys = list(key_permissions.keys())
+
+    with open("suggestions.txt", "w") as file:
+        for i in range(100):
+            permission_list = [permission for permission in permissions]
+            sentence = ""
+            sentence += random.choice(intent_suggest_text)
+            cnt = 0
+            word = None
+
+            subset_length = random.randint(1, 5)
+
+            # Pick a random subset
+            random_subset = random.sample(permission_list, subset_length)
+
+            # Remove the elements of the random subset from the original list
+            permission_list = [
+                element for element in permission_list if element not in random_subset
+            ]
+
+            random_key = random.choice(choice_keys[0])
+            sentence += (
+                f' "[{random.choice(negative_positive)+random_key}](allowed_word)" '
+            )
+            for permission in random_subset:
+                sentence += f'"[{permission}](allowed_permissions)",'
+            sentence = sentence[:-1] + " and "
+
+            subset_length = random.randint(1, 3)
+
+            # Pick a random subset
+            random_subset = random.sample(permission_list, subset_length)
+
+            # Remove the elements of the random subset from the original list
+            permission_list = [
+                element for element in permission_list if element not in random_subset
+            ]
+
+            random_key = random.choice(choice_keys[1])
+            sentence += (
+                f' "[{random.choice(negative_positive)+random_key}](restricted_word)" '
+            )
+            for permission in random_subset:
+                sentence += f'"[{permission}](restricted_permissions)",'
+            sentence = sentence[:-1] + " and "
+
+            subset_length = random.randint(1, 2)
+
+            # Pick a random subset
+            random_subset = random.sample(permission_list, subset_length)
+
+            # Remove the elements of the random subset from the original list
+            permission_list = [
+                element for element in permission_list if element not in random_subset
+            ]
+
+            random_key = random.choice(choice_keys[2])
+            sentence += (
+                f' "[{random.choice(negative_positive)+random_key}](offered_word)" '
+            )
+            for permission in random_subset:
+                sentence += f'"[{permission}](offered_permissions)",'
+
+            sentence = sentence[:-1] + " and "
+
+            cnt += 1
+            file.write("- " + sentence + "\n")
+
+
+def writeSuggestionInstances4():
+    choice_keys = list(key_permissions.keys())
+
+    with open("suggestions.txt", "w") as file:
+        for i in range(100):
+            permission_list = [permission for permission in permissions]
+            sentence = ""
+            sentence += random.choice(intent_suggest_text)
+            cnt = 0
+            word = None
+
+            subset_length = random.randint(1, 5)
+
+            # Pick a random subset
+            random_subset = random.sample(permission_list, subset_length)
+
+            # Remove the elements of the random subset from the original list
+            permission_list = [
+                element for element in permission_list if element not in random_subset
+            ]
+
+            random_key = random.choice(choice_keys[0])
+            sentence += (
+                f' "[{random.choice(negative_positive)+random_key}](allowed_word)" '
+            )
+            for permission in random_subset:
+                sentence += f'"[{permission}](allowed_permissions)",'
+            sentence = sentence[:-1] + " and "
+
+            subset_length = random.randint(1, 3)
+
+            # Pick a random subset
+            random_subset = random.sample(permission_list, subset_length)
+
+            # Remove the elements of the random subset from the original list
+            permission_list = [
+                element for element in permission_list if element not in random_subset
+            ]
+
+            random_key = random.choice(choice_keys[1])
+            sentence += (
+                f' "[{random.choice(negative_positive)+random_key}](restricted_word)" '
+            )
+            for permission in random_subset:
+                sentence += f'"[{permission}](restricted_permissions)",'
+            sentence = sentence[:-1] + " and "
+
+            # subset_length = random.randint(1, 2)
+
+            # # Pick a random subset
+            # random_subset = random.sample(permission_list, subset_length)
+
+            # # Remove the elements of the random subset from the original list
+            # permission_list = [
+            #     element for element in permission_list if element not in random_subset
+            # ]
+
+            # random_key = random.choice(choice_keys[2])
+            # sentence += (
+            #     f' "[{random.choice(negative_positive)+random_key}](offered_word)" '
+            # )
+            # for permission in random_subset:
+            #     sentence += f'"[{permission}](offered_permissions)",'
+
+            # sentence = sentence[:-1]
+
+            cnt += 1
+            file.write("- " + sentence + "\n")
+
+
 def writeLicensesNames():
     licenses, ids = read_licenses_info("../licensesJSON/")
     with open("licenses.txt", "w") as file:
@@ -154,6 +324,19 @@ def writeLicensesNames():
                 + license
                 + '](license_name)" \n'
             )
+
+
+def writeSpecificPermissions(n):
+    licenses, ids = read_licenses_info("../licensesJSON/")
+    with open("suggestions.txt", "w") as file:
+        for i in range(len(licenses)):
+            line = "- " + random.choice(intent_of_specific_permission)
+            line = line.replace(
+                "[permission]", f'"[{random.choice(permissions)}](permission)"'
+            )
+            line = line.replace("[license_name]", f'"[{licenses[i]}](license_name)"')
+            line = line.replace("[choice]", f'"[{random.choice(choices)}](choice)"')
+            file.write(line + "\n")
 
 
 def writeLicensesIds():
@@ -171,4 +354,5 @@ def writeLicensesIds():
 
 # writeLicensesNames()
 # writeLicensesIds()
-writeLicensesIds()
+# writeLicensesIds()
+writeSuggestionInstances4()

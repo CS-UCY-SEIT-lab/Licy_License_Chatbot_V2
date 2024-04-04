@@ -19,6 +19,41 @@ var answer_counter=1;
 var question_counter=1;
 var details_object= {};
 
+function closePopupChatbotInfo(element){
+    element.parentNode.style.display="none"; 
+}
+function displayAboutChatbot(){
+    $.ajax({
+        type: "POST",
+        url: '/chatbot-info',
+        contentType: 'application/json',
+        data: JSON.stringify({ type: "none"}),
+        success: function(data) {
+            let htmlString="";
+            let license_table_body=document.getElementById("chatbot-info-license-table-body");
+            let permission_table_body=document.getElementById("chatbot-info-permissions-table-body");
+            
+            for(i=0; i<data["license_titles"].length ;i++){
+                htmlString+="<tr>"
+                htmlString+=`<td>${data.license_titles[i]}</td><td>${data.license_ids[i]}</td>`
+                htmlString+="</tr>"
+            }
+            license_table_body.insertAdjacentHTML('beforeend', htmlString);
+            htmlString="";
+            for(i=0; i<data["permissions"].length ;i++){
+                htmlString+="<tr>"
+                htmlString+=`<td>${data.permissions[i]}</td><td>${data.permission_explanations[i]}</td>`
+                htmlString+="</tr>"
+            }
+            permission_table_body.insertAdjacentHTML('beforeend', htmlString);
+
+            document.getElementById("popup-chatbot-info").style.display="block";
+            
+        }
+    
+    });
+   
+}
 function getQuestionID(elementID){
     var regex = /(\d+)(?=\D*$)/;
 
@@ -404,7 +439,7 @@ function displayPermissionTable(info){
     var allkeys=[...Object.keys(license_instance[0]),...Object.keys(license_instance[1]),...Object.keys(license_instance[2])];
     let element= document.createElement("div")
     element.id=`more-details-content-${answer_counter}`
-    var htmlCode=`<div id="table-container" class="table-responsive"><table class="table table-dark table-striped rounded-3 overflow-hidden">
+    var htmlCode=`<div id="header"><h1>Here are some more details about this answer</h1></div><div class="table-container table-responsive"><table class="table table-dark table-striped rounded-3 overflow-hidden">
     <thead><tr><th scope="col" class="text-nowrap text-center p-3">Recommended Licenses</th>`; 
     for (let key of allkeys) {
         htmlCode += `<th scope="col" class="text-nowrap text-center p-3">${key}</th>`;

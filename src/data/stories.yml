@@ -30,10 +30,26 @@ stories:
       - intent: affirm
       - action: action_get_license_info
 
-  - story: User asks for license permissions
+  - story: User disagrees on license
+    steps:
+      - intent: ask_for_license
+      - action: action_get_license
+      - intent: deny
+      - action: utter_ask_license
+
+  - story: User asks for license permissions and agrees
     steps:
       - intent: ask_for_license_permission
+      - action: action_get_license
+      - intent: affirm
       - action: action_check_permission
+
+  - story: User asks for license permissions and disagrees
+    steps:
+      - intent: ask_for_license_permission
+      - action: action_get_license
+      - intent: deny
+      - action: utter_ask_license
 
   - story: User asks for license suggestions
     steps:
@@ -44,13 +60,6 @@ stories:
     steps:
       - intent: ask_for_license_tutorial
       - action: action_start_tutorial
-
-  - story: User disagrees on license
-    steps:
-      - intent: ask_for_license
-      - action: action_get_license
-      - intent: deny
-      - action: utter_ask_license
 
   - story: sad path 1
     steps:
