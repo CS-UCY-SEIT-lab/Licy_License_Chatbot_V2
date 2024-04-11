@@ -563,7 +563,7 @@ function askChatbot(message){
             console.log(data.info)
             if (data.info !== null){
 
-                if(data.info.key === "permission_suggested_licenses" || data.info.key=== "license_info"){
+                if(data.info.key === "permission_suggested_licenses" || data.info.key=== "license_info" || data.info.key=== "license_restrictions_or_permissions"){
                     displayPermissionTable(data.info);
                     addMoreInfoIcon(chatBlock)
                 }

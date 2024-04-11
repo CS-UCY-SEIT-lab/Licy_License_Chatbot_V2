@@ -64,6 +64,10 @@ limitations = []
 all_permissions = []
 licenses_text = []
 confirmed_license = None
+allow_restrict_dict = {
+    "allow": ["privileges", "allow", "permissions", "benefits"],
+    "restrict": ["restrictions", "limitations"],
+}
 choice_synonyms = {
     "allow": ["allow", "permit", "accept", "let", "grant", "authorize"],
     "deny": [
@@ -178,6 +182,39 @@ def exist_similar(word, list, max_init):
             return 1
 
     return 0
+
+
+def find_restrictions_or_permissions(choice, license_id):
+    index = ids.index(license_id)
+    permission_sample = [[], [], []]
+    # print("Permissions: ", permissions)
+    # print("Conditions: ", conditions)
+    # print("Limitations: ", limitations)
+    if choice == "restrict":
+        for key, value in licenses[index].permissions.items():
+            print("Key: ", key, "    Value: ", value)
+            if value == 0:
+                permission_sample[0].append(key)
+        for key, value in licenses[index].conditions.items():
+            print("Key: ", key, "    Value: ", value)
+            if value == 0:
+                permission_sample[1].append(key)
+        for key, value in licenses[index].limitations.items():
+            print("Key: ", key, "    Value: ", value)
+            if value == 1:
+                permission_sample[2].append(key)
+    else:
+        for key, value in licenses[index].permissions.items():
+            if value == 1:
+                permission_sample[0].append(key)
+        for key, value in licenses[index].conditions.items():
+            if value == 1:
+                permission_sample[1].append(key)
+        for key, value in licenses[index].limitations.items():
+            if value == 0:
+                permission_sample[2].append(key)
+
+    return permission_sample
 
 
 def find_similar(input, dictionary):
@@ -454,6 +491,66 @@ class LicenseInfoProvider(Action):
         return []
 
 
+class GetLicenseRestrictionsOrPermissions(Action):
+
+    def name(self) -> Text:
+        return "action_get_restrictions_or_permissions"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        read_licenses_info("./licensesJSON/")
+        license_parameter = tracker.get_slot("confirmed_license_name")
+        choice = tracker.get_slot("choice")
+        license_name, license_id, max_similarity = check_license_similarity(
+            license_parameter, titles, ids
+        )
+        print("License name:", license_name)
+        choice, similarity = find_similar(choice, allow_restrict_dict)
+        # Do something with the parameters
+        permission_sample = find_restrictions_or_permissions(choice, license_id)
+        license_permissions, license_title = getLicenseInfo([license_id])
+        message = ""
+        keyword = ""
+        if choice == "restrict":
+            keyword = "doesn't"
+
+        if len(permission_sample[0]) > 1:
+            message += f"The {license_name}({license_id}) {keyword} permit: \n"
+        for permission in permission_sample[0]:
+            message += permission + ","
+
+        message = message[:-1]
+
+        if len(permission_sample[1]) > 1:
+            message += f".It {keyword} require: \n"
+
+        for permission in permission_sample[1]:
+            message += permission + ","
+
+        message = message[:-1]
+
+        if len(permission_sample[2]) > 1:
+            message += f".It {keyword} offer: \n"
+
+        for permission in permission_sample[2]:
+            message += permission + ","
+        message = message[:-1]
+        json_mess = {
+            "key": "license_restrictions_or_permissions",
+            "license_id": license_id,
+            "license_titles": license_title,
+            "license_permissions": license_permissions,
+        }
+
+        dispatcher.utter_message(text=message, json_message=json_mess)
+        return [AllSlotsReset()]
+
+
 class LicensePermissionInfo(Action):
 
     def name(self) -> Text:
@@ -559,8 +656,8 @@ class LicenseSuggestion(Action):
             "license_titles": licenses_full_name,
             "license_permissions": license_permissions,
         }
-        if(allowed_word is None and  restricted_word is None and offered_word is None) :
-            output_message="I am afraid you didn't finish your question. In more details you can find all the licenses i can suggest!"
+        if allowed_word is None and restricted_word is None and offered_word is None:
+            output_message = "I am afraid you didn't finish your question. In more details you can find all the licenses i can suggest!"
         dispatcher.utter_message(text=output_message, json_message=json_mess)
 
         return [AllSlotsReset()]

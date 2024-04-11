@@ -17,6 +17,7 @@ intents:
   - ask_for_license_definition
   - who_are_you
   - thank
+  - ask_for_license_restictions_or_allows
 entities:
   - answer
   - license_name
@@ -41,6 +42,9 @@ slots:
       - type: from_entity
         entity: license_name
         intent: ask_for_license_permission
+      - type: from_entity
+        entity: license_name
+        intent: ask_for_license_restictions_or_allows
 
   permission:
     type: text
@@ -103,6 +107,10 @@ slots:
       - type: from_entity
         entity: choice
         intent: ask_for_license_permission
+      - type: from_entity
+        entity: choice
+        intent: ask_for_license_restictions_or_allows
+
   confirmed_license_name:
     type: text
     mappings: []
@@ -121,6 +129,7 @@ actions:
   - action_check_permission
   - action_suggest_license
   - action_finish_tutorial
+  - action_get_restrictions_or_permissions
 responses:
   utter_greet:
     - text: Hello there! How can i assist you?

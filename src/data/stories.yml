@@ -23,6 +23,20 @@ stories:
       - intent: ask_for_license_definition
       - action: utter_license_definition
 
+  - story: User asks for license permissions and agrees
+    steps:
+      - intent: ask_for_license_permission
+      - action: action_get_license
+      - intent: affirm
+      - action: action_check_permission
+
+  - story: User asks for license permissions and disagrees
+    steps:
+      - intent: ask_for_license_permission
+      - action: action_get_license
+      - intent: deny
+      - action: utter_ask_license
+
   - story: User agrees on license
     steps:
       - intent: ask_for_license
@@ -37,16 +51,16 @@ stories:
       - intent: deny
       - action: utter_ask_license
 
-  - story: User asks for license permissions and agrees
+  - story: User asks for restrictions or permissions and agrees
     steps:
-      - intent: ask_for_license_permission
+      - intent: ask_for_license_restictions_or_allows
       - action: action_get_license
       - intent: affirm
-      - action: action_check_permission
+      - action: action_get_restrictions_or_permissions
 
-  - story: User asks for license permissions and disagrees
+  - story: User asks for restrictions or permissions and declines
     steps:
-      - intent: ask_for_license_permission
+      - intent: ask_for_license_restictions_or_allows
       - action: action_get_license
       - intent: deny
       - action: utter_ask_license

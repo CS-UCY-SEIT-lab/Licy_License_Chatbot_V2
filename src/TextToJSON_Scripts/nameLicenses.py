@@ -20,6 +20,18 @@ intent_text = [
     "What is",
     "",
 ]
+intent_of_restrictions_or_allows = [
+    "What [choice] does [license_name] have ?",
+    "What are the [choice] of [license_name] ?",
+]
+
+restrict_or_allow_choice = [
+    "restrictions",
+    "permissions",
+    "limitations",
+    "benefits",
+    "privileges",
+]
 negative_positive = [
     "do ",
     "does ",
@@ -313,6 +325,20 @@ def writeSuggestionInstances4():
             file.write("- " + sentence + "\n")
 
 
+def writePermitOrRestrictInstances():
+    licenses, ids = read_licenses_info("../newJSON/")
+
+    with open("suggestions.txt", "w") as file:
+        for i in range(len(licenses)):
+            line = "- "
+            line += random.choice(intent_of_restrictions_or_allows)
+            line = line.replace(
+                "[choice]", f'"[{random.choice(restrict_or_allow_choice)}](choice)"'
+            )
+            line = line.replace("[license_name]", f'"[{ids[i]}](license_name)"')
+            file.write(line + "\n")
+
+
 def writeLicensesNames():
     licenses, ids = read_licenses_info("../licensesJSON/")
     with open("licenses.txt", "w") as file:
@@ -355,4 +381,4 @@ def writeLicensesIds():
 # writeLicensesNames()
 # writeLicensesIds()
 # writeLicensesIds()
-writeSuggestionInstances4()
+writePermitOrRestrictInstances()
