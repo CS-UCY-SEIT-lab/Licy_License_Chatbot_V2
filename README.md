@@ -81,6 +81,7 @@ You need to run a bash script so we can enable the rasa api, run the Flask serve
 
 ### For windows('start_services.bat' file):
 
+```bat
 *@echo off
 rem Command 1: Run  the rasa action server in the background
 start "" rasa run actions
@@ -88,13 +89,13 @@ rem Command 2: Run another Rasa process with API enabled
 start "" rasa run --enable-api
 rem Command 3: Change directory and run the Flask server in the background
 cd backend && start "" python chatbot.py*
-
+```
 #### To run the bat script: 
 ./start_services.bat
 
 
 ### For MacOS and Linux('start_services.sh' file):
-
+```bash
 *#!/bin/bash
 #Command 1: Run  the rasa action server in the background
 rasa run actions &
@@ -102,6 +103,7 @@ rasa run actions &
 rasa run --enable-api &
 #Command 3: Change directory and run the Flask server in the background
 cd backend && python chatbot.py &*
+```
 
 #### To run the bash script: 
 ./start_services.sh
