@@ -39,3 +39,75 @@ Here are some key components and features of the Rasa framework:
     
 
 Overall, Rasa provides a powerful platform for building AI-driven chatbots and virtual assistants that can understand user input, carry out conversations, and perform tasks or provide information based on user requests. Its flexibility, customizability, and open-source nature make it a popular choice for developers looking to create conversational AI solutions.
+
+# How to create the environment and install the chatbot (Guide)
+
+## Install Anaconda on your machine.
+
+Anaconda is a popular open-source distribution of Python and R programming languages that is used for scientific computing, data science, and machine learning tasks. It provides a comprehensive suite of tools, libraries, and packages that are commonly used in these fields, making it easier for users to set up and manage their development environments.
+
+You can find the installation process: 
+
+### On windows:
+https://docs.anaconda.com/free/anaconda/install/windows/
+
+### On macOS:
+https://docs.anaconda.com/free/anaconda/install/mac-os/
+
+### On linux:
+https://docs.anaconda.com/free/anaconda/install/linux/
+
+## Create a virtual environment with anaconda.
+You need to create a virtual environment using Python 3.9 which is compatible with the Rasa framework:
+
+**conda create -n envname python**=**3.9**
+
+## Install tensorflow which is used for Rasa training.
+
+command:
+**pip install tensorflow**
+
+## Install Rasa python framework
+command:
+**pip install rasa**
+
+## Clone the repository from Github.
+command:
+**git clone https://github.com/giorgosshittasCS/License_Chatbot_V2**
+
+## Start services
+
+You need to run a bash script so we can enable the rasa api, run the Flask server in Python and run the rasa action server to handle some custom actions written. Create the file in the **src** folder.
+
+### For windows('start_services.bat' file):
+
+*@echo off
+rem Command 1: Run  the rasa action server in the background
+start "" rasa run actions
+rem Command 2: Run another Rasa process with API enabled
+start "" rasa run --enable-api
+rem Command 3: Change directory and run the Flask server in the background
+cd backend && start "" python chatbot.py*
+
+#### To run the bat script: 
+./start_services.bat
+
+
+### For MacOS and Linux('start_services.sh' file):
+
+*#!/bin/bash
+#Command 1: Run  the rasa action server in the background
+rasa run actions &
+#Command 2: Run another Rasa process with API enabled
+rasa run --enable-api &
+#Command 3: Change directory and run the Flask server in the background
+cd backend && python chatbot.py &*
+
+#### To run the bash script: 
+./start_services.sh
+
+### You can interfere with the chatbot on localhost address written in chatbot.py file: 
+
+http://127.0.0.1:5000/
+
+**You can change the address inside the chatbot.py file.**
