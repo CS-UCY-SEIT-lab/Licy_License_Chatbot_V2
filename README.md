@@ -57,6 +57,8 @@ https://docs.anaconda.com/free/anaconda/install/mac-os/
 ### On linux:
 https://docs.anaconda.com/free/anaconda/install/linux/
 
+> From Terminal: https://phoenixnap.com/kb/install-anaconda-ubuntu.
+
 ## Create a virtual environment with anaconda.
 You need to create a virtual environment using Python 3.9 which is compatible with the Rasa framework:
 
