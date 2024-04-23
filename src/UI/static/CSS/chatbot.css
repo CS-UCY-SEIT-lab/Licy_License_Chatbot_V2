@@ -7,7 +7,6 @@ body{
   }
   .table-container{
     border-radius: 10px;
-    margin-top:100px;
     display: flex;
     /* overflow-x: auto; */
   }
@@ -439,7 +438,15 @@ body{
   position: fixed;
   right:10px;
   top:10px;
+  display: flex;
+  color:rgb(215, 232, 116);
+  flex-direction: row;
+  align-items: center;
+  gap:10px;
   z-index: 999;
+ }
+ #about-chatbot p{
+   margin-bottom: 0;
  }
   span.highlighted{
    color: aqua;
@@ -451,7 +458,7 @@ body{
  #popup-chatbot-info > h1,
  #popup-chatbot-info > h2,
  #popup-chatbot-info > h3 {
-     margin: 20px 0 0 20px;
+     margin: 30px 0 30px 20px;
  }
  
  .example-text{
@@ -471,7 +478,15 @@ body{
  }
  .heading{
   color:cornflowerblue;
+  margin-bottom: 20px;
  }
- #popup-chatbot-info .table-container{
+ #popup-chatbot-info {
   margin-top:30px !important;
+  margin-bottom: 30px !important;
  }
+ #resources-component{
+  padding-bottom: 40px;
+ }
+.table-container{
+  margin-top: 50px;
+}

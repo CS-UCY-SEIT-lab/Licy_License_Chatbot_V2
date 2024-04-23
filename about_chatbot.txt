@@ -1,0 +1,29 @@
+What can i ask the chatbot?
+
+You can ask the chatbot to give you some information(summary) about a license.
+- Example:   Can you give me some info about GPL-2.0 ?
+
+You can ask the chatbot if a license allows a specific permission(The permissions you can ask are listed below).
+- Example:   Does the the software license EPL-2.0 permit commercial-use ?
+
+You can ask the chatbot to suggest you a license through a series of questions. Different questions are listed based on your knowledge about software licenses .
+- Example:   Can you suggest me some software licenses ?
+
+You can ask the chatbot to suggest you some licenses that [allow] ,[restrict] and [offer] specific permissions. There is a recommended format for asking this question. For each keyword you can use a specific subset of permissions. Make sure to seperate them with 'and'(See examples below)
+allow: [commercial-use,modifications,distribution,private-use,sublicensing,patent-use,trademark-use]
+demand: [include-copyright,disclose-source,document-changes,network-use-disclose,same-license]
+offer: [liability,warranty]
+- Example:   Can you suggest me some licenses which accept distribution, sublicensing, commercial-use, modifications, private-use and does not demand document-changes and offer liability,warranty
+
+- Example:   Tell me some licenses that allow patent-use,trademark-use,private-use and demand same-license, disclose-source,network-use-diclose and give liability,warranty
+
+You can ask the chatbot what benefits or restrictions the license have
+- Example:   What are the benefits of EUPL-1.2 ?
+
+- Example:   What benefits does MPL-2.0 have ?
+
+You can ask the chatbot about the definition of a software license
+
+- Example:   What is a software license
+
+- Example:   Can you help me understand what a software license is?

@@ -218,7 +218,7 @@ def list_files_in_directory(directory):
 def extract_data(parsed_data):
     answer = ""
     info = None
-
+    print(parsed_data)
     for dictionary in parsed_data:
         if "text" in dictionary:
             answer += dictionary["text"]
@@ -270,7 +270,7 @@ app.secret_key = secrets.token_hex(16)
 def index():
     session["userID"] = generate_user_id()
     print("USER ID:", session["userID"])
-    return render_template("website_test.html")
+    return render_template("chatbot.html")
 
 
 @app.route("/retrieve-license-info", methods=["POST"])
@@ -384,16 +384,18 @@ def ask():
     data = request.json
     user_answer = data.get("user_input")
     url = "http://localhost:5005/webhooks/rest/webhook"
-    data = {"sender": "User", "message": user_answer}
+    data = {"sender": session["userID"], "message": user_answer}
     answer = ""
     action_json = "None"
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
-        parsed_data = response.json()
 
+        parsed_data = response.json()
         answer, action_json = extract_data(parsed_data)
 
+        if answer == "":
+            answer = "Sorry buy i did not understand your request. My capabilies are limited. You can see what you can ask for by pressing 'About Chatbot' on the upper right corner"
         return jsonify({"message": answer, "info": action_json})
 
     return jsonify({"message": "Error"})

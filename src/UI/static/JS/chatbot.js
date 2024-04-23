@@ -15,9 +15,16 @@
 //         });
 //     });
 // });
+//okay
 var answer_counter=1;
 var question_counter=1;
 var details_object= {};
+var resources_html=`<h3 class="heading">Resources: </h3>
+<ul>
+    <li><a href="https://www.tldrlegal.com/">https://www.tldrlegal.com/</a>
+    </li>
+    <li><a href="https://choosealicense.com/">https://choosealicense.com/</a></li>
+</ul>`;
 
 function closePopupChatbotInfo(element){
     element.parentNode.style.display="none"; 
@@ -418,6 +425,7 @@ function addMoreInfoIcon(container){
         let element=details_object[answer_index];
         let more_details_component=document.getElementById("more-details-component");
         more_details_component.append(element);
+        more_details_component.insertAdjacentHTML('beforeend',resources_html)
         more_details_component.style.display="block";
         
         

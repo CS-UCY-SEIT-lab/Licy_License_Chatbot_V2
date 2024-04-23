@@ -519,14 +519,14 @@ class GetLicenseRestrictionsOrPermissions(Action):
         if choice == "restrict":
             keyword = "doesn't"
 
-        if len(permission_sample[0]) > 1:
+        if len(permission_sample[0]) >= 1:
             message += f"The {license_name}({license_id}) {keyword} permit: \n"
         for permission in permission_sample[0]:
             message += permission + ","
 
         message = message[:-1]
 
-        if len(permission_sample[1]) > 1:
+        if len(permission_sample[1]) >= 1:
             message += f".It {keyword} require: \n"
 
         for permission in permission_sample[1]:
@@ -534,7 +534,7 @@ class GetLicenseRestrictionsOrPermissions(Action):
 
         message = message[:-1]
 
-        if len(permission_sample[2]) > 1:
+        if len(permission_sample[2]) >= 1:
             message += f".It {keyword} offer: \n"
 
         for permission in permission_sample[2]:

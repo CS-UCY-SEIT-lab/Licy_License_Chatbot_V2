@@ -1074,18 +1074,52 @@ nlu:
       - Hey, can you recommend a good software license for me?
       - Help! I'm stuck picking a license for my app.
       - Help me find a software license.
+      - Suggest me some licenses.
+      - Tell me some licenses.
+      - Find me some software licenses.
+      - Give me some software licenses.
 
   - intent: ask_for_license_definition
     examples: |
       - What is a software license?
       - What is the definition of software license?
       - I don't know what is a software license?
+      - Can you explain what a software license is?
+      - I'm unsure about what a software license entails, can you clarify?
+      - Could you define what a software license means?
+      - Tell me more about what a software license is.
+      - I need a clear definition of a software license.
+      - What exactly does a software license refer to?
+      - Can you help me understand what a software license is?
+      - Please provide a definition for a software license.
+      - Enlighten me on what constitutes a software license.
+      - I'm not clear on the concept of a software license, can you define it?
+      - What's the meaning of a software license?
+      - How would you describe a software license?
+      - I'm confused about software licenses, what are they?
+      - What does 'software license' mean?
+      - Define a software license for me, please.
 
   - intent: who_are_you
     examples: |
       - Who are you?
       - Who are you exactly?
       - What is your job?
+      - Can you tell me about yourself?
+      - What's your role?
+      - What do you do?
+      - Are you a bot?
+      - What should I call you?
+      - What is your purpose?
+      - Who am I speaking with?
+      - What are you called?
+      - Are you the licensing assistant?
+      - What's your function?
+      - Could you introduce yourself?
+      - What is your identity?
+      - Are you an AI?
+      - What's your name?
+      - Do you have a name?
 
   - intent: thank
     examples: |
@@ -1093,6 +1127,21 @@ nlu:
       - Thank you very much!!
       - Appreciate your help!!
       - Very helpful
+      - Thanks for the assistance!
+      - I'm grateful for your help.
+      - Thanks a lot!
+      - Many thanks!
+      - Cheers for the help!
+      - That was really helpful, thanks!
+      - I appreciate it, thank you.
+      - My thanks to you.
+      - You've been a great help, thank you.
+      - Thanks for your support!
+      - I can't thank you enough.
+      - Your assistance is appreciated, thanks!
+      - Thank you for your guidance.
+      - Heartfelt thanks.
+      - You're a lifesaver, thanks!
 
   - intent: ask_for_license_restictions_or_allows
     examples: |
