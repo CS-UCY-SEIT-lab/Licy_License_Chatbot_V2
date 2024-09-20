@@ -1,6 +1,6 @@
 # About the Repository:
 
-This is a Software License chatbot written with the Rasa Python framework that assists the user to find the appropriate license for its software based on his requirements.
+Licy is a Software License chatbot written with the Rasa Python framework that assists users to find the appropriate Open Source Software (OSS) license for their software based on their requirements, while it also provides users with information on specifc OSS licenses.
 
 
 # Technologies used:
