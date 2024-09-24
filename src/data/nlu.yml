@@ -229,7 +229,7 @@ nlu:
       - Does the "[Mozilla Public License 2.0](license_name)" "[let](choice)" me to "[alter](permission)" the code?
       - Am I "[permitted](choice)" to "[make changes](permission)" to a program under the "[GNU General Public License v3](license_name)"?
       - "[Can](choice)" i "[share](permission)" the "[LGPL-3.0](license_name)" software with others?
-      - Is "[redistributing](permission)" "[allowed](permission)" for the license "[Creative Commons Attribution Share Alike](license_name)"?
+      - Is "[redistributing](permission)" "[allowed](choice)" for the license "[Creative Commons Attribution Share Alike](license_name)"?
       - Am I "[forbidden](choice)" to "[give away copies](permission)" of software with the "[GNU Affero General Public License v3.0](license_name)" ?
       - "[Can](choice)" i use the "[EPL-1.0](license_name)" software for "[personal projects](permission)" ?
       - Am I "[permitted](choice)" to use for "[my own purposes](permission)" software with the "[BSD-2-Clause](license_name)" ?
