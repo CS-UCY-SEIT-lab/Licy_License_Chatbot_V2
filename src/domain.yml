@@ -150,8 +150,6 @@ responses:
   #   - text: Let me help you find the license that will suit best on your needs. Can you please choose your knowledge on Software Licenses?
   utter_iamabot:
     - text: I am Licy a software license chatbot who can help you find more information about licenses. I can also guide you to find the appropriate license for your software through a series of questions.
-  utter_order_pizza:
-    - text: Can i have your order please?
   utter_ask_license:
     - text: "I might not know this license or you misspronounce it. Can you provide me again the license so i can check? "
   utter_pleasure:
